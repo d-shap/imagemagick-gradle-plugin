@@ -19,6 +19,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.plugin.imagemagick;
 
+import java.io.PrintStream;
+
 import org.gradle.api.Action;
 import org.gradle.api.Task;
 
@@ -29,16 +31,19 @@ import org.gradle.api.Task;
  */
 public final class ImageMagickGradleAction implements Action<Task> {
 
+    private final PrintStream _printStream;
+
     /**
      * Create new object.
      */
     public ImageMagickGradleAction() {
         super();
+        _printStream = System.out;
     }
 
     @Override
     public void execute(final Task task) {
-        System.out.println("ImageMagick!");
+        _printStream.println("ImageMagick!");
     }
 
 }
