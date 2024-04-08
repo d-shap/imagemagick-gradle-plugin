@@ -33,7 +33,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <project.module.name>ru.d_shap.plugin.imagemagick-gradle-plugin</project.module.name>
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.compiler.source>1.7</maven.compiler.source>
 
@@ -49,7 +48,6 @@
         <spotbugs.version>4.6.0</spotbugs.version>
         <spotbugs.findsecbugs.plugin.version>1.11.0</spotbugs.findsecbugs.plugin.version>
         <spotbugs.file>${basedir}/checks/spotbugs-strict.xml</spotbugs.file>
-        <jar.plugin.version>3.2.2</jar.plugin.version>
         <source.plugin.version>3.2.1</source.plugin.version>
         <javadoc.plugin.version>3.3.2</javadoc.plugin.version>
         <gpg.plugin.version>3.0.1</gpg.plugin.version>
@@ -201,18 +199,6 @@
                     <effort>Max</effort>
                     <threshold>Low</threshold>
                     <xmlOutput>true</xmlOutput>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${jar.plugin.version}</version>
-                <configuration>
-                    <archive>
-                        <manifestEntries>
-                            <Automatic-Module-Name>${project.module.name}</Automatic-Module-Name>
-                        </manifestEntries>
-                    </archive>
                 </configuration>
             </plugin>
         </plugins>
