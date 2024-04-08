@@ -2,13 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ru.d-shap</groupId>
+    <groupId>ru.d-shap.plugin</groupId>
     <artifactId>imagemagick-gradle-plugin</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>ImageMagick Gradle Plugin</name>
-    <description>Gradle plugin to call ImageMagick CLI</description>
+    <description>ImageMagick Gradle Plugin is a plugin to call ImageMagick CLI</description>
     <url>https://github.com/d-shap/imagemagick-gradle-plugin</url>
 
     <licenses>
@@ -33,7 +33,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <project.module.name>ru.d_shap.imagemagick-gradle-plugin</project.module.name>
+        <project.module.name>ru.d_shap.plugin.imagemagick-gradle-plugin</project.module.name>
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.compiler.source>1.7</maven.compiler.source>
 
@@ -49,9 +49,7 @@
         <spotbugs.version>4.6.0</spotbugs.version>
         <spotbugs.findsecbugs.plugin.version>1.11.0</spotbugs.findsecbugs.plugin.version>
         <spotbugs.file>${basedir}/checks/spotbugs-strict.xml</spotbugs.file>
-        <jacoco.plugin.version>0.8.10</jacoco.plugin.version>
         <jar.plugin.version>3.2.2</jar.plugin.version>
-        <pitest.plugin.version>1.4.11</pitest.plugin.version>
         <source.plugin.version>3.2.1</source.plugin.version>
         <javadoc.plugin.version>3.3.2</javadoc.plugin.version>
         <gpg.plugin.version>3.0.1</gpg.plugin.version>
@@ -59,28 +57,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.gradle</groupId>
             <artifactId>gradle-core</artifactId>
+            <version>6.1.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.gradle</groupId>
-            <artifactId>gradle-base-services</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.gradle</groupId>
-            <artifactId>gradle-base-services-groovy</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.gradle</groupId>
-            <artifactId>gradle-plugins</artifactId>
+            <artifactId>gradle-core-api</artifactId>
+            <version>6.1.1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -195,71 +180,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>prepare-agent-jacoco</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                        <configuration>
-                            <includes>
-                                <include>ru/d_shap/**/*</include>
-                            </includes>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>report-jacoco</id>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>check-jacoco</id>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <configuration>
-                            <haltOnFailure>true</haltOnFailure>
-                            <rules>
-                                <rule>
-                                    <element>BUNDLE</element>
-                                    <limits>
-                                        <limit>
-                                            <counter>INSTRUCTION</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>1.0</minimum>
-                                        </limit>
-                                        <limit>
-                                            <counter>BRANCH</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>1.0</minimum>
-                                        </limit>
-                                        <limit>
-                                            <counter>COMPLEXITY</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>1.0</minimum>
-                                        </limit>
-                                        <limit>
-                                            <counter>CLASS</counter>
-                                            <value>MISSEDCOUNT</value>
-                                            <maximum>0</maximum>
-                                        </limit>
-                                        <limit>
-                                            <counter>METHOD</counter>
-                                            <value>MISSEDCOUNT</value>
-                                            <maximum>0</maximum>
-                                        </limit>
-                                    </limits>
-                                </rule>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>${jar.plugin.version}</version>
@@ -323,7 +243,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <keyname>(maven signature - plugins)</keyname>
+                            <keyname>(maven signature - plugin)</keyname>
                         </configuration>
                     </plugin>
                 </plugins>
