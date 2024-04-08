@@ -29,14 +29,16 @@ import org.gradle.api.Project;
  */
 public final class ImageMagickGradlePlugin implements Plugin<Project> {
 
+    /**
+     * Create new object.
+     */
     public ImageMagickGradlePlugin() {
         super();
     }
 
     @Override
     public void apply(final Project project) {
-        project.task("hello")
-                .doLast(task -> System.out.println("Hello Gradle!"));
+        project.task("imagemagick").doLast(new ImageMagickGradleAction());
     }
 
 }
