@@ -19,6 +19,12 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick;
 
+import org.gradle.api.Project;
+import org.gradle.api.file.FileTree;
+import org.gradle.api.tasks.util.PatternSet;
+
+import groovy.lang.Closure;
+
 /**
  * ImageMagick gradle plugin pipeline.
  *
@@ -26,19 +32,23 @@ package ru.d_shap.gradle.plugin.imagemagick;
  */
 public class ImageMagickGradlePluginPipeline {
 
+    private final Project _project;
+
     private final String _name;
 
-    private String _message;
+    private FileTree _source;
 
     /**
      * Create new object.
      *
-     * @param name the name.
+     * @param name    the name.
+     * @param project the project.
      */
-    public ImageMagickGradlePluginPipeline(final String name) {
+    public ImageMagickGradlePluginPipeline(final String name, final Project project) {
         super();
+        _project = project;
         _name = name;
-        _message = null;
+        _source = null;
     }
 
     /**
@@ -51,21 +61,33 @@ public class ImageMagickGradlePluginPipeline {
     }
 
     /**
-     * Get the message.
+     * Get the source files.
      *
-     * @return the message.
+     * @return the source files.
      */
-    public String getMessage() {
-        return _message;
+    public FileTree getSource() {
+        return _source;
     }
 
     /**
-     * Set the message.
+     * Set the source files.
      *
-     * @param message the message.
+     * @param baseDir    the base dir.
+     * @param patternSet the pattern set.
      */
-    public void setMessage(final String message) {
-        _message = message;
+    public void src(final String baseDir, final PatternSet patternSet) {
+        _source = _project.fileTree(baseDir).matching(patternSet);
+    }
+
+    /**
+     * Set the source files.
+     *
+     * @param baseDir the base dir.
+     * @param closure the closure.
+     */
+    public void src(final String baseDir, final Closure<?> closure) {
+        PatternSet patternSet = (PatternSet) _project.configure(new PatternSet(), closure);
+        src(baseDir, patternSet);
     }
 
 }
