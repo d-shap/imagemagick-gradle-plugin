@@ -20,6 +20,7 @@
 package ru.d_shap.gradle.plugin.imagemagick;
 
 import org.gradle.api.Project;
+import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.tasks.util.PatternSet;
 
@@ -36,7 +37,9 @@ public class ImageMagickGradlePluginPipeline {
 
     private final String _name;
 
-    private FileTree _source;
+    private String _sourceBaseDir;
+
+    private FileTree _sourceFiles;
 
     /**
      * Create new object.
@@ -48,7 +51,8 @@ public class ImageMagickGradlePluginPipeline {
         super();
         _project = project;
         _name = name;
-        _source = null;
+        _sourceBaseDir = null;
+        _sourceFiles = null;
     }
 
     /**
@@ -61,28 +65,39 @@ public class ImageMagickGradlePluginPipeline {
     }
 
     /**
+     * Get the source base directory.
+     *
+     * @return the source base directory.
+     */
+    public String getSourceBaseDir() {
+        return _sourceBaseDir;
+    }
+
+    /**
      * Get the source files.
      *
      * @return the source files.
      */
-    public FileTree getSource() {
-        return _source;
+    public FileTree getSourceFiles() {
+        return _sourceFiles;
     }
 
     /**
      * Set the source files.
      *
-     * @param baseDir    the base dir.
+     * @param baseDir    the source base directory.
      * @param patternSet the pattern set.
      */
     public void src(final String baseDir, final PatternSet patternSet) {
-        _source = _project.fileTree(baseDir).matching(patternSet);
+        ConfigurableFileTree fileTree = _project.fileTree(baseDir);
+        _sourceBaseDir = fileTree.getDir().getAbsolutePath();
+        _sourceFiles = fileTree.matching(patternSet);
     }
 
     /**
      * Set the source files.
      *
-     * @param baseDir the base dir.
+     * @param baseDir the source base directory.
      * @param closure the closure.
      */
     public void src(final String baseDir, final Closure<?> closure) {
