@@ -19,40 +19,38 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick;
 
-import java.util.List;
-
 /**
- * ImageMagick gradle plugin extension.
+ * ImageMagick gradle plugin pipeline.
  *
  * @author Dmitry Shapovalov
  */
-public class ImageMagickGradlePluginExtension {
+public class ImageMagickGradlePluginPipeline {
 
-    private List<ImageMagickGradlePluginPipeline> _pipelines;
+    private String _message;
 
     /**
      * Create new object.
      */
-    public ImageMagickGradlePluginExtension() {
+    public ImageMagickGradlePluginPipeline() {
         super();
     }
 
     /**
-     * Get the pipelines.
+     * Get the message.
      *
-     * @return the pipelines.
+     * @return the message.
      */
-    public List<ImageMagickGradlePluginPipeline> getPipelines() {
-        return _pipelines;
+    public String getMessage() {
+        return _message;
     }
 
     /**
-     * Set the pipelines.
+     * Set the message.
      *
-     * @param pipelines the pipelines.
+     * @param message the message.
      */
-    public void setPipelines(final List<ImageMagickGradlePluginPipeline> pipelines) {
-        _pipelines = pipelines;
+    public void setMessage(final String message) {
+        _message = message;
     }
 
 }
