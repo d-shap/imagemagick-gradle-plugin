@@ -19,8 +19,12 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.gradle.api.Action;
-import org.gradle.api.model.ObjectFactory;
+import org.gradle.api.NamedDomainObjectContainer;
+import org.gradle.api.Project;
 
 /**
  * ImageMagick gradle plugin extension.
@@ -29,34 +33,39 @@ import org.gradle.api.model.ObjectFactory;
  */
 public class ImageMagickGradlePluginExtension {
 
-    private final ImageMagickGradlePluginPipeline _pipeline;
+    private final NamedDomainObjectContainer<ImageMagickGradlePluginPipeline> _container;
+
+    private final List<ImageMagickGradlePluginPipeline> _pipelines;
 
     /**
      * Create new object.
      *
-     * @param objectFactory the object factory.
+     * @param project the project.
      */
-    public ImageMagickGradlePluginExtension(final ObjectFactory objectFactory) {
+    public ImageMagickGradlePluginExtension(final Project project) {
         super();
-        _pipeline = objectFactory.newInstance(ImageMagickGradlePluginPipeline.class);
+        _container = project.container(ImageMagickGradlePluginPipeline.class);
+        _pipelines = new ArrayList<>();
     }
 
     /**
-     * Get the pipeline.
+     * Get the pipelines.
      *
-     * @return the pipeline.
+     * @return the pipelines.
      */
-    public ImageMagickGradlePluginPipeline getPipeline() {
-        return _pipeline;
+    public List<ImageMagickGradlePluginPipeline> getPipelines() {
+        return _pipelines;
     }
 
     /**
-     * aaa.
+     * Set the pipelines with the action.
      *
-     * @param action aaa.
+     * @param action the action.
      */
-    public void pipeline(final Action<? super ImageMagickGradlePluginPipeline> action) {
-        action.execute(_pipeline);
+    public void pipelines(final Action<? super NamedDomainObjectContainer<ImageMagickGradlePluginPipeline>> action) {
+        action.execute(_container);
+        _pipelines.clear();
+        _pipelines.addAll(_container);
     }
 
 }
