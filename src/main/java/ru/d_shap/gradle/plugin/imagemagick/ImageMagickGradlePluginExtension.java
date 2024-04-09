@@ -19,6 +19,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick;
 
+import org.gradle.api.Action;
 import org.gradle.api.model.ObjectFactory;
 
 /**
@@ -32,8 +33,9 @@ public class ImageMagickGradlePluginExtension {
 
     /**
      * Create new object.
+     *
+     * @param objectFactory the object factory.
      */
-    @javax.inject.Inject
     public ImageMagickGradlePluginExtension(final ObjectFactory objectFactory) {
         super();
         _pipeline = objectFactory.newInstance(ImageMagickGradlePluginPipeline.class);
@@ -46,6 +48,15 @@ public class ImageMagickGradlePluginExtension {
      */
     public ImageMagickGradlePluginPipeline getPipeline() {
         return _pipeline;
+    }
+
+    /**
+     * aaa.
+     *
+     * @param action aaa.
+     */
+    public void pipeline(final Action<? super ImageMagickGradlePluginPipeline> action) {
+        action.execute(_pipeline);
     }
 
 }
