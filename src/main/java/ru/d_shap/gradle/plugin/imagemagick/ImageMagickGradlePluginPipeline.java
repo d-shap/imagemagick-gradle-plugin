@@ -48,10 +48,10 @@ public class ImageMagickGradlePluginPipeline {
     /**
      * Create new object.
      *
-     * @param name    the name.
      * @param project the project.
+     * @param name    the name.
      */
-    public ImageMagickGradlePluginPipeline(final String name, final Project project) {
+    public ImageMagickGradlePluginPipeline(final Project project, final String name) {
         super();
         _project = project;
         _name = name;
