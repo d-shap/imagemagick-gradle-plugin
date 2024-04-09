@@ -20,7 +20,7 @@
 package ru.d_shap.gradle.plugin.imagemagick;
 
 /**
- * ImageMagick Gradle Plugin Extension.
+ * ImageMagick gradle plugin extension.
  *
  * @author Dmitry Shapovalov
  */
