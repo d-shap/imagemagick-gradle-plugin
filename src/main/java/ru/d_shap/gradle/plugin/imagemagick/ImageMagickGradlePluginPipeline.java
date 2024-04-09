@@ -19,6 +19,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick;
 
+import java.io.File;
+
 import org.gradle.api.Project;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.FileTree;
@@ -37,9 +39,11 @@ public class ImageMagickGradlePluginPipeline {
 
     private final String _name;
 
-    private String _sourceBaseDir;
+    private File _sourceBaseDir;
 
     private FileTree _sourceFiles;
+
+    private File _destinationDir;
 
     /**
      * Create new object.
@@ -53,6 +57,7 @@ public class ImageMagickGradlePluginPipeline {
         _name = name;
         _sourceBaseDir = null;
         _sourceFiles = null;
+        _destinationDir = null;
     }
 
     /**
@@ -69,7 +74,7 @@ public class ImageMagickGradlePluginPipeline {
      *
      * @return the source base directory.
      */
-    public String getSourceBaseDir() {
+    public File getSourceBaseDir() {
         return _sourceBaseDir;
     }
 
@@ -83,6 +88,15 @@ public class ImageMagickGradlePluginPipeline {
     }
 
     /**
+     * Get the destination directory.
+     *
+     * @return the destination directory.
+     */
+    public File getDestinationDir() {
+        return _destinationDir;
+    }
+
+    /**
      * Set the source files.
      *
      * @param baseDir    the source base directory.
@@ -90,7 +104,7 @@ public class ImageMagickGradlePluginPipeline {
      */
     public void src(final String baseDir, final PatternSet patternSet) {
         ConfigurableFileTree fileTree = _project.fileTree(baseDir);
-        _sourceBaseDir = fileTree.getDir().getAbsolutePath();
+        _sourceBaseDir = fileTree.getDir().getAbsoluteFile();
         _sourceFiles = fileTree.matching(patternSet);
     }
 
@@ -103,6 +117,16 @@ public class ImageMagickGradlePluginPipeline {
     public void src(final String baseDir, final Closure<?> closure) {
         PatternSet patternSet = (PatternSet) _project.configure(new PatternSet(), closure);
         src(baseDir, patternSet);
+    }
+
+    /**
+     * Set the destination directory.
+     *
+     * @param destinationDir the destination directory.
+     */
+    public void dst(final String destinationDir) {
+        File buildDir = _project.getBuildDir().getAbsoluteFile();
+        _destinationDir = new File(buildDir, destinationDir);
     }
 
 }
