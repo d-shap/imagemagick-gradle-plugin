@@ -20,7 +20,6 @@
 package ru.d_shap.gradle.plugin.imagemagick;
 
 import java.io.PrintStream;
-import java.util.List;
 
 import org.gradle.api.Action;
 import org.gradle.api.Task;
@@ -50,12 +49,8 @@ public class ImageMagickGradleAction implements Action<Task> {
     @Override
     public void execute(final Task task) {
         _printStream.println("ImageMagick 3!");
-        List<ImageMagickGradlePluginPipeline> pipelines = _extension.getPipelines();
-        if (pipelines != null) {
-            for (ImageMagickGradlePluginPipeline pipeline : pipelines) {
-                _printStream.println(pipeline.getMessage());
-            }
-        }
+        ImageMagickGradlePluginPipeline pipeline = _extension.getPipeline();
+        _printStream.println(pipeline.getMessage());
     }
 
 }
