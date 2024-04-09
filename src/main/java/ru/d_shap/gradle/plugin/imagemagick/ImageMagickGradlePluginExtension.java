@@ -19,7 +19,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick;
 
-import java.util.List;
+import org.gradle.api.model.ObjectFactory;
 
 /**
  * ImageMagick gradle plugin extension.
@@ -28,31 +28,24 @@ import java.util.List;
  */
 public class ImageMagickGradlePluginExtension {
 
-    private List<ImageMagickGradlePluginPipeline> _pipelines;
+    private final ImageMagickGradlePluginPipeline _pipeline;
 
     /**
      * Create new object.
      */
-    public ImageMagickGradlePluginExtension() {
+    @javax.inject.Inject
+    public ImageMagickGradlePluginExtension(final ObjectFactory objectFactory) {
         super();
+        _pipeline = objectFactory.newInstance(ImageMagickGradlePluginPipeline.class);
     }
 
     /**
-     * Get the pipelines.
+     * Get the pipeline.
      *
-     * @return the pipelines.
+     * @return the pipeline.
      */
-    public List<ImageMagickGradlePluginPipeline> getPipelines() {
-        return _pipelines;
-    }
-
-    /**
-     * Set the pipelines.
-     *
-     * @param pipelines the pipelines.
-     */
-    public void setPipelines(final List<ImageMagickGradlePluginPipeline> pipelines) {
-        _pipelines = pipelines;
+    public ImageMagickGradlePluginPipeline getPipeline() {
+        return _pipeline;
     }
 
 }
