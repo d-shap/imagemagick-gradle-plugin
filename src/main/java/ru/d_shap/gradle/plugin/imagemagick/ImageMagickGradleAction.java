@@ -21,6 +21,7 @@ package ru.d_shap.gradle.plugin.imagemagick;
 
 import java.io.File;
 import java.io.PrintStream;
+import java.nio.file.Path;
 import java.util.List;
 
 import org.gradle.api.Action;
@@ -63,7 +64,12 @@ public class ImageMagickGradleAction implements Action<Task> {
     }
 
     private void processFile(final String name, final File sourceBaseDir, final File sourceFile, final File destinationDir) {
-        _printStream.println(name + " -> " + sourceBaseDir + ", " + sourceFile + ", " + destinationDir);
+        Path sourceBasePath = sourceBaseDir.toPath();
+        Path sourceFilePath = sourceFile.toPath();
+        Path sourceRelativePath = sourceBasePath.relativize(sourceFilePath);
+        Path destinationFilePath = destinationDir.toPath();
+        destinationFilePath = destinationFilePath.resolve(sourceRelativePath);
+        _printStream.println(name + " -> " + sourceFilePath + ", " + destinationFilePath);
     }
 
 }
