@@ -17,28 +17,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-package ru.d_shap.plugin.imagemagick;
-
-import org.gradle.api.Plugin;
-import org.gradle.api.Project;
-
 /**
- * ImageMagick Gradle Plugin.
- *
- * @author Dmitry Shapovalov
+ * ImageMagick Gradle Plugin is a plugin to call ImageMagick CLI.
  */
-public final class ImageMagickGradlePlugin implements Plugin<Project> {
-
-    /**
-     * Create new object.
-     */
-    public ImageMagickGradlePlugin() {
-        super();
-    }
-
-    @Override
-    public void apply(final Project project) {
-        project.task("imagemagick").doLast(new ImageMagickGradleAction());
-    }
-
-}
+package ru.d_shap.gradle.plugin.imagemagick;

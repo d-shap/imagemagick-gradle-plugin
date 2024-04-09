@@ -17,33 +17,28 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-package ru.d_shap.plugin.imagemagick;
+package ru.d_shap.gradle.plugin.imagemagick;
 
-import java.io.PrintStream;
-
-import org.gradle.api.Action;
-import org.gradle.api.Task;
+import org.gradle.api.Plugin;
+import org.gradle.api.Project;
 
 /**
- * ImageMagick Gradle Action.
+ * ImageMagick Gradle Plugin.
  *
  * @author Dmitry Shapovalov
  */
-public final class ImageMagickGradleAction implements Action<Task> {
-
-    private final PrintStream _printStream;
+public final class ImageMagickGradlePlugin implements Plugin<Project> {
 
     /**
      * Create new object.
      */
-    public ImageMagickGradleAction() {
+    public ImageMagickGradlePlugin() {
         super();
-        _printStream = System.out;
     }
 
     @Override
-    public void execute(final Task task) {
-        _printStream.println("ImageMagick!");
+    public void apply(final Project project) {
+        project.task("imagemagick").doLast(new ImageMagickGradleAction());
     }
 
 }
