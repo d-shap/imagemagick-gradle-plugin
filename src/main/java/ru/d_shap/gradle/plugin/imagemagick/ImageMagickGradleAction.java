@@ -52,7 +52,7 @@ public class ImageMagickGradleAction implements Action<Task> {
         _printStream.println("ImageMagick!");
         List<ImageMagickGradlePluginPipeline> pipelines = _extension.getPipelines();
         for (ImageMagickGradlePluginPipeline pipeline : pipelines) {
-            _printStream.println(pipeline.getName() + " -> " + pipeline.getSourceBaseDir() + ", " + pipeline.getSourceFiles().getFiles().size());
+            _printStream.println(pipeline.getName() + " -> " + pipeline.getSourceBaseDir() + ", " + pipeline.getSourceFiles().getFiles().size() + ", " + pipeline.getDestinationDir().getAbsolutePath());
         }
     }
 
