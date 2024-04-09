@@ -23,7 +23,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 
 /**
- * ImageMagick Gradle Plugin.
+ * ImageMagick gradle plugin.
  *
  * @author Dmitry Shapovalov
  */
@@ -38,7 +38,8 @@ public final class ImageMagickGradlePlugin implements Plugin<Project> {
 
     @Override
     public void apply(final Project project) {
-        project.task("imagemagick").doLast(new ImageMagickGradleAction());
+        ImageMagickGradlePluginExtension imageMagickGradlePluginExtension = project.getExtensions().create("imagemagick", ImageMagickGradlePluginExtension.class);
+        project.task("imagemagick").doLast(new ImageMagickGradleAction(imageMagickGradlePluginExtension));
     }
 
 }
