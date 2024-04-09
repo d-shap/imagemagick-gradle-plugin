@@ -25,25 +25,31 @@ import org.gradle.api.Action;
 import org.gradle.api.Task;
 
 /**
- * ImageMagick Gradle Action.
+ * ImageMagick gradle action.
  *
  * @author Dmitry Shapovalov
  */
 public final class ImageMagickGradleAction implements Action<Task> {
 
+    private final ImageMagickGradlePluginExtension _imageMagickGradlePluginExtension;
+
     private final PrintStream _printStream;
 
     /**
      * Create new object.
+     *
+     * @param imageMagickGradlePluginExtension ImageMagick gradle plugin extension.
      */
-    public ImageMagickGradleAction() {
+    public ImageMagickGradleAction(final ImageMagickGradlePluginExtension imageMagickGradlePluginExtension) {
         super();
+        _imageMagickGradlePluginExtension = imageMagickGradlePluginExtension;
         _printStream = System.out;
     }
 
     @Override
     public void execute(final Task task) {
         _printStream.println("ImageMagick 2!");
+        _printStream.println(_imageMagickGradlePluginExtension.getMessage());
     }
 
 }
