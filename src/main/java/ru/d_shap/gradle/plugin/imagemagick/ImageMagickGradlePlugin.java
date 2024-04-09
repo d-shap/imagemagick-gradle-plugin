@@ -22,7 +22,6 @@ package ru.d_shap.gradle.plugin.imagemagick;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.plugins.ExtensionContainer;
 
 /**
@@ -46,8 +45,7 @@ public class ImageMagickGradlePlugin implements Plugin<Project> {
     @Override
     public void apply(final Project project) {
         ExtensionContainer extensionContainer = project.getExtensions();
-        ObjectFactory objectFactory = project.getObjects();
-        ImageMagickGradlePluginExtension extension = extensionContainer.create(EXTENSION_NAME, ImageMagickGradlePluginExtension.class, objectFactory);
+        ImageMagickGradlePluginExtension extension = extensionContainer.create(EXTENSION_NAME, ImageMagickGradlePluginExtension.class, project);
         Task task = project.task(TASK_NAME);
         ImageMagickGradleAction action = new ImageMagickGradleAction(extension);
         task.doLast(action);
