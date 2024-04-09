@@ -29,7 +29,7 @@ import org.gradle.api.Task;
  *
  * @author Dmitry Shapovalov
  */
-public final class ImageMagickGradleAction implements Action<Task> {
+public class ImageMagickGradleAction implements Action<Task> {
 
     private final ImageMagickGradlePluginExtension _imageMagickGradlePluginExtension;
 

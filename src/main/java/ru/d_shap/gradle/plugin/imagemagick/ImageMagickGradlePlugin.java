@@ -29,7 +29,7 @@ import org.gradle.api.plugins.ExtensionContainer;
  *
  * @author Dmitry Shapovalov
  */
-public final class ImageMagickGradlePlugin implements Plugin<Project> {
+public class ImageMagickGradlePlugin implements Plugin<Project> {
 
     /**
      * Create new object.

@@ -24,7 +24,7 @@ package ru.d_shap.gradle.plugin.imagemagick;
  *
  * @author Dmitry Shapovalov
  */
-public final class ImageMagickGradlePluginExtension {
+public class ImageMagickGradlePluginExtension {
 
     private String _message;
 
