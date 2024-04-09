@@ -19,6 +19,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick;
 
+import java.io.File;
 import java.io.PrintStream;
 import java.util.List;
 
@@ -52,8 +53,17 @@ public class ImageMagickGradleAction implements Action<Task> {
         _printStream.println("ImageMagick!");
         List<ImageMagickGradlePluginPipeline> pipelines = _extension.getPipelines();
         for (ImageMagickGradlePluginPipeline pipeline : pipelines) {
-            _printStream.println(pipeline.getName() + " -> " + pipeline.getSourceBaseDir() + ", " + pipeline.getSourceFiles().getFiles().size() + ", " + pipeline.getDestinationDir().getAbsolutePath());
+            String name = pipeline.getName();
+            File sourceBaseDir = pipeline.getSourceBaseDir();
+            File destinationDir = pipeline.getDestinationDir();
+            for (File sourceFile : pipeline.getSourceFiles()) {
+                processFile(name, sourceBaseDir, sourceFile, destinationDir);
+            }
         }
+    }
+
+    private void processFile(final String name, final File sourceBaseDir, final File sourceFile, final File destinationDir) {
+        _printStream.println(name + " -> " + sourceBaseDir + ", " + sourceFile + ", " + destinationDir);
     }
 
 }
