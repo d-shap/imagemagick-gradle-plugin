@@ -26,13 +26,28 @@ package ru.d_shap.gradle.plugin.imagemagick;
  */
 public class ImageMagickGradlePluginPipeline {
 
+    private final String _name;
+
     private String _message;
 
     /**
      * Create new object.
+     *
+     * @param name the name.
      */
-    public ImageMagickGradlePluginPipeline() {
+    public ImageMagickGradlePluginPipeline(final String name) {
         super();
+        _name = name;
+        _message = null;
+    }
+
+    /**
+     * Get the name.
+     *
+     * @return the name.
+     */
+    public String getName() {
+        return _name;
     }
 
     /**
