@@ -81,8 +81,7 @@ public class ImageMagickGradleAction implements Action<Task> {
         Path destinationFilePath = destinationDir.toPath();
         destinationFilePath = destinationFilePath.resolve(sourceRelativePath);
 
-        File file = destinationFilePath.getParent().toFile();
-        file.mkdirs();
+        ensureDestinationExists(destinationFilePath);
 
         Context context = new Context(sourceFilePath, destinationFilePath);
         List<Parameter> parameters = parametersConfiguration.getParameters();
@@ -101,6 +100,14 @@ public class ImageMagickGradleAction implements Action<Task> {
         }
 
         _printStream.println(command);
+    }
+
+    private void ensureDestinationExists(final Path destinationFilePath) {
+        Path parentPath = destinationFilePath.getParent();
+        if (parentPath != null) {
+            File file = parentPath.toFile();
+            file.mkdirs();
+        }
     }
 
 }
