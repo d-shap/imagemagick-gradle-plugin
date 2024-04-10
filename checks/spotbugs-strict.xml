@@ -218,9 +218,9 @@
     <Match>
         <Bug pattern="SE_BAD_FIELD_STORE" />
     </Match>
-    <Match>
+    <!--<Match>
         <Bug pattern="RV_RETURN_VALUE_IGNORED_BAD_PRACTICE" />
-    </Match>
+    </Match>-->
     <Match>
         <Bug pattern="NP_TOSTRING_COULD_RETURN_NULL" />
     </Match>
