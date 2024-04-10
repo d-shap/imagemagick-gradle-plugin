@@ -33,7 +33,7 @@ import org.gradle.api.Project;
  */
 public class ExtensionConfiguration {
 
-    private final NamedDomainObjectContainer<PipelineConfiguration> _pipelineContainer;
+    private final Project _project;
 
     private final List<PipelineConfiguration> _pipelineConfigurations;
 
@@ -44,7 +44,7 @@ public class ExtensionConfiguration {
      */
     public ExtensionConfiguration(final Project project) {
         super();
-        _pipelineContainer = project.container(PipelineConfiguration.class);
+        _project = project;
         _pipelineConfigurations = new ArrayList<>();
     }
 
@@ -63,9 +63,10 @@ public class ExtensionConfiguration {
      * @param action the action.
      */
     public void pipelines(final Action<? super NamedDomainObjectContainer<PipelineConfiguration>> action) {
-        action.execute(_pipelineContainer);
+        NamedDomainObjectContainer<PipelineConfiguration> pipelineContainer = _project.container(PipelineConfiguration.class);
+        action.execute(pipelineContainer);
         _pipelineConfigurations.clear();
-        _pipelineConfigurations.addAll(_pipelineContainer);
+        _pipelineConfigurations.addAll(pipelineContainer);
     }
 
 }
