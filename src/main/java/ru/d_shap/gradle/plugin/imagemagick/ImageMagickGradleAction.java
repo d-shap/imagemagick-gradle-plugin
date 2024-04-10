@@ -81,6 +81,9 @@ public class ImageMagickGradleAction implements Action<Task> {
         Path destinationFilePath = destinationDir.toPath();
         destinationFilePath = destinationFilePath.resolve(sourceRelativePath);
 
+        File file = destinationFilePath.getParent().toFile();
+        file.mkdirs();
+
         Context context = new Context(sourceFilePath, destinationFilePath);
         List<Parameter> parameters = parametersConfiguration.getParameters();
         List<String> strs = new ArrayList<>();
