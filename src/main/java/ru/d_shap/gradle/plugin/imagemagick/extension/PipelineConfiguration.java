@@ -92,15 +92,6 @@ public class PipelineConfiguration {
     }
 
     /**
-     * Get the destination directory.
-     *
-     * @return the destination directory.
-     */
-    public File getDestinationDir() {
-        return _destinationDir;
-    }
-
-    /**
      * Set the source files.
      *
      * @param sourceBaseDir the source base directory.
@@ -124,6 +115,15 @@ public class PipelineConfiguration {
     }
 
     /**
+     * Get the destination directory.
+     *
+     * @return the destination directory.
+     */
+    public File getDestinationDir() {
+        return _destinationDir;
+    }
+
+    /**
      * Set the destination directory.
      *
      * @param destinationDir the destination directory.
@@ -131,6 +131,15 @@ public class PipelineConfiguration {
     public void dst(final String destinationDir) {
         File buildDir = _project.getBuildDir().getAbsoluteFile();
         _destinationDir = new File(buildDir, destinationDir);
+    }
+
+    /**
+     * Get the parameter configuration.
+     *
+     * @return the parameter configuration.
+     */
+    public ParameterConfiguration getParameterConfiguration() {
+        return _parameterConfiguration;
     }
 
     /**
