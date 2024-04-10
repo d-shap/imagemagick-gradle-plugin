@@ -18,6 +18,6 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * Package contains extension configuration classes.
+ * Package contains configuration classes.
  */
-package ru.d_shap.gradle.plugin.imagemagick.extension;
+package ru.d_shap.gradle.plugin.imagemagick.configuration;
