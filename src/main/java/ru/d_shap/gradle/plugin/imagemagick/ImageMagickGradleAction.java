@@ -42,6 +42,8 @@ import ru.d_shap.gradle.plugin.imagemagick.parameters.Parameter;
  */
 public class ImageMagickGradleAction implements Action<Task> {
 
+    private static final String COMMAND = "magick";
+
     private final ExtensionConfiguration _extensionConfiguration;
 
     private final PrintStream _printStream;
@@ -82,13 +84,18 @@ public class ImageMagickGradleAction implements Action<Task> {
         Context context = new Context(sourceFilePath, destinationFilePath);
         List<Parameter> parameters = parametersConfiguration.getParameters();
         List<String> strs = new ArrayList<>();
-        strs.add("magick");
         for (Parameter parameter : parameters) {
             String str = parameter.invoke(context);
             strs.add(str);
         }
 
-        _printStream.println(strs);
+        StringBuilder command = new StringBuilder();
+        command.append(COMMAND);
+        for (String str : strs) {
+            command.append(' ').append(str);
+        }
+
+        _printStream.println(command);
     }
 
 }
