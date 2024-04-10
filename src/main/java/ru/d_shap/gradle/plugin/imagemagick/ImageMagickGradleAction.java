@@ -22,10 +22,18 @@ package ru.d_shap.gradle.plugin.imagemagick;
 import java.io.File;
 import java.io.PrintStream;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.Action;
 import org.gradle.api.Task;
+import org.gradle.api.file.FileTree;
+
+import ru.d_shap.gradle.plugin.imagemagick.configuration.ExtensionConfiguration;
+import ru.d_shap.gradle.plugin.imagemagick.configuration.ParametersConfiguration;
+import ru.d_shap.gradle.plugin.imagemagick.configuration.PipelineConfiguration;
+import ru.d_shap.gradle.plugin.imagemagick.parameters.Context;
+import ru.d_shap.gradle.plugin.imagemagick.parameters.Parameter;
 
 /**
  * ImageMagick gradle action.
@@ -34,42 +42,53 @@ import org.gradle.api.Task;
  */
 public class ImageMagickGradleAction implements Action<Task> {
 
-    private final ImageMagickGradlePluginExtension _extension;
+    private final ExtensionConfiguration _extensionConfiguration;
 
     private final PrintStream _printStream;
 
     /**
      * Create new object.
      *
-     * @param extension ImageMagick gradle plugin extension.
+     * @param extensionConfiguration ImageMagick gradle plugin extension.
      */
-    public ImageMagickGradleAction(final ImageMagickGradlePluginExtension extension) {
+    public ImageMagickGradleAction(final ExtensionConfiguration extensionConfiguration) {
         super();
-        _extension = extension;
+        _extensionConfiguration = extensionConfiguration;
         _printStream = System.out;
     }
 
     @Override
     public void execute(final Task task) {
         _printStream.println("ImageMagick!");
-        List<ImageMagickGradlePluginPipeline> pipelines = _extension.getPipelines();
-        for (ImageMagickGradlePluginPipeline pipeline : pipelines) {
-            String name = pipeline.getName();
-            File sourceBaseDir = pipeline.getSourceBaseDir();
-            File destinationDir = pipeline.getDestinationDir();
-            for (File sourceFile : pipeline.getSourceFiles()) {
-                processFile(name, sourceBaseDir, sourceFile, destinationDir);
+        List<PipelineConfiguration> pipelineConfigurations = _extensionConfiguration.getPipelineConfigurations();
+        for (PipelineConfiguration pipelineConfiguration : pipelineConfigurations) {
+            ParametersConfiguration parametersConfiguration = pipelineConfiguration.getParameterConfiguration();
+            File sourceBaseDir = pipelineConfiguration.getSourceBaseDir();
+            FileTree sourceFiles = pipelineConfiguration.getSourceFiles();
+            File destinationDir = pipelineConfiguration.getDestinationDir();
+            for (File sourceFile : sourceFiles) {
+                processFile(parametersConfiguration, sourceBaseDir, sourceFile, destinationDir);
             }
         }
     }
 
-    private void processFile(final String name, final File sourceBaseDir, final File sourceFile, final File destinationDir) {
+    private void processFile(final ParametersConfiguration parametersConfiguration, final File sourceBaseDir, final File sourceFile, final File destinationDir) {
         Path sourceBasePath = sourceBaseDir.toPath();
         Path sourceFilePath = sourceFile.toPath();
         Path sourceRelativePath = sourceBasePath.relativize(sourceFilePath);
         Path destinationFilePath = destinationDir.toPath();
         destinationFilePath = destinationFilePath.resolve(sourceRelativePath);
-        _printStream.println(name + " -> " + sourceFilePath + ", " + destinationFilePath);
+
+        Context context = new Context(sourceFilePath, destinationFilePath);
+        List<Parameter> parameters = parametersConfiguration.getParameters();
+        List<String> strs = new ArrayList<>();
+        strs.add("magick");
+        for (Parameter parameter : parameters) {
+            String str = parameter.invoke(context);
+            strs.add(str);
+        }
+
+        _printStream.println(strs);
     }
 
 }
