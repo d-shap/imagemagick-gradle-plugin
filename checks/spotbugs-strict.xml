@@ -1600,9 +1600,9 @@
     <Match>
         <Bug pattern="HTTP_RESPONSE_SPLITTING" />
     </Match>
-    <Match>
+    <!--<Match>
         <Bug pattern="CRLF_INJECTION_LOGS" />
-    </Match>
+    </Match>-->
     <Match>
         <Bug pattern="EXTERNAL_CONFIG_CONTROL" />
     </Match>
