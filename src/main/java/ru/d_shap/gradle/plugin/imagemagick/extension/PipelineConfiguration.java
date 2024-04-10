@@ -99,11 +99,11 @@ public class PipelineConfiguration {
     /**
      * Set the source files.
      *
-     * @param baseDir    the source base directory.
-     * @param patternSet the pattern set.
+     * @param sourceBaseDir the source base directory.
+     * @param patternSet    the pattern set.
      */
-    public void src(final String baseDir, final PatternSet patternSet) {
-        ConfigurableFileTree fileTree = _project.fileTree(baseDir);
+    public void src(final String sourceBaseDir, final PatternSet patternSet) {
+        ConfigurableFileTree fileTree = _project.fileTree(sourceBaseDir);
         _sourceBaseDir = fileTree.getDir().getAbsoluteFile();
         _sourceFiles = fileTree.matching(patternSet);
     }
@@ -111,12 +111,12 @@ public class PipelineConfiguration {
     /**
      * Set the source files.
      *
-     * @param baseDir the source base directory.
-     * @param closure the closure.
+     * @param sourceBaseDir the source base directory.
+     * @param closure       the closure.
      */
-    public void src(final String baseDir, final Closure<?> closure) {
+    public void src(final String sourceBaseDir, final Closure<?> closure) {
         PatternSet patternSet = (PatternSet) _project.configure(new PatternSet(), closure);
-        src(baseDir, patternSet);
+        src(sourceBaseDir, patternSet);
     }
 
     /**
