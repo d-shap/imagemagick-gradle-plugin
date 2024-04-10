@@ -86,7 +86,9 @@ public class ImageMagickGradleAction implements Action<Task> {
         List<String> strs = new ArrayList<>();
         for (Parameter parameter : parameters) {
             String str = parameter.invoke(context);
-            strs.add(str);
+            if (str != null) {
+                strs.add(str);
+            }
         }
 
         StringBuilder command = new StringBuilder();
