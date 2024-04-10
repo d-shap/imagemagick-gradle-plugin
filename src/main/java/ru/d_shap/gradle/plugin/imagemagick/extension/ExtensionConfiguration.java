@@ -35,7 +35,7 @@ public class ExtensionConfiguration {
 
     private final NamedDomainObjectContainer<PipelineConfiguration> _container;
 
-    private final List<PipelineConfiguration> _pipelines;
+    private final List<PipelineConfiguration> _pipelineConfigurations;
 
     /**
      * Create new object.
@@ -45,27 +45,27 @@ public class ExtensionConfiguration {
     public ExtensionConfiguration(final Project project) {
         super();
         _container = project.container(PipelineConfiguration.class);
-        _pipelines = new ArrayList<>();
+        _pipelineConfigurations = new ArrayList<>();
     }
 
     /**
-     * Get the pipelines.
+     * Get the pipeline configurations.
      *
-     * @return the pipelines.
+     * @return the pipeline configurations.
      */
-    public List<PipelineConfiguration> getPipelines() {
-        return _pipelines;
+    public List<PipelineConfiguration> getPipelineConfigurations() {
+        return _pipelineConfigurations;
     }
 
     /**
-     * Set the pipelines with the action.
+     * Set the pipeline configurations.
      *
      * @param action the action.
      */
     public void pipelines(final Action<? super NamedDomainObjectContainer<PipelineConfiguration>> action) {
         action.execute(_container);
-        _pipelines.clear();
-        _pipelines.addAll(_container);
+        _pipelineConfigurations.clear();
+        _pipelineConfigurations.addAll(_container);
     }
 
 }
