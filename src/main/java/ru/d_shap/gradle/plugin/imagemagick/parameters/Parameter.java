@@ -19,14 +19,12 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick.parameters;
 
-import java.io.Serializable;
-
 /**
  * The parameter.
  *
  * @author Dmitry Shapovalov
  */
-public interface Parameter extends Serializable {
+public interface Parameter {
 
     /**
      * Invoke the parameter.
