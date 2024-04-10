@@ -19,7 +19,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick.extension;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +31,7 @@ import org.gradle.api.Project;
  *
  * @author Dmitry Shapovalov
  */
-public class ExtensionConfiguration implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class ExtensionConfiguration {
 
     private final NamedDomainObjectContainer<PipelineConfiguration> _container;
 
