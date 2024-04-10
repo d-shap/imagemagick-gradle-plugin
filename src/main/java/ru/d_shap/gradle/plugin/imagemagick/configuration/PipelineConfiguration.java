@@ -103,17 +103,6 @@ public class PipelineConfiguration {
     }
 
     /**
-     * Set the source files.
-     *
-     * @param sourceBaseDir the source base directory.
-     * @param closure       the closure.
-     */
-    public void src(final String sourceBaseDir, final Closure<?> closure) {
-        PatternSet patternSet = (PatternSet) _project.configure(new PatternSet(), closure);
-        src(sourceBaseDir, patternSet);
-    }
-
-    /**
      * Get the destination directory.
      *
      * @return the destination directory.
