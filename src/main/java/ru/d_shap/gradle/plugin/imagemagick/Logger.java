@@ -37,24 +37,6 @@ public final class Logger {
     }
 
     /**
-     * Check if debug level is enabled.
-     *
-     * @return true, if debug level is enabled.
-     */
-    public static boolean isDebugEnabled() {
-        return LOGGER_INSTANCE.isDebugEnabled();
-    }
-
-    /**
-     * Log the message with debug level.
-     *
-     * @param message the message.
-     */
-    public static void debug(final String message) {
-        LOGGER_INSTANCE.debug(message);
-    }
-
-    /**
      * Check if info level is enabled.
      *
      * @return true, if info level is enabled.
@@ -70,6 +52,24 @@ public final class Logger {
      */
     public static void info(final String message) {
         LOGGER_INSTANCE.info(message);
+    }
+
+    /**
+     * Check if warn level is enabled.
+     *
+     * @return true, if warn level is enabled.
+     */
+    public static boolean isWarnEnabled() {
+        return LOGGER_INSTANCE.isWarnEnabled();
+    }
+
+    /**
+     * Log the message with warn level.
+     *
+     * @param message the message.
+     */
+    public static void warn(final String message) {
+        LOGGER_INSTANCE.warn(message);
     }
 
 }

@@ -57,8 +57,8 @@ public class ImageMagickGradleAction implements Action<Task> {
 
     @Override
     public void execute(final Task task) {
-        if (Logger.isInfoEnabled()) {
-            Logger.info("Start processing images with ImageMagick");
+        if (Logger.isWarnEnabled()) {
+            Logger.warn("Start processing images with ImageMagick");
         }
         List<PipelineConfiguration> pipelineConfigurations = _extensionConfiguration.getPipelineConfigurations();
         for (PipelineConfiguration pipelineConfiguration : pipelineConfigurations) {
@@ -70,8 +70,8 @@ public class ImageMagickGradleAction implements Action<Task> {
                 processFile(parametersConfiguration, sourceBaseDir, sourceFile, destinationDir);
             }
         }
-        if (Logger.isInfoEnabled()) {
-            Logger.info("Finish processing images with ImageMagick");
+        if (Logger.isWarnEnabled()) {
+            Logger.warn("Finish processing images with ImageMagick");
         }
     }
 
@@ -100,8 +100,8 @@ public class ImageMagickGradleAction implements Action<Task> {
             command.append(' ').append(str);
         }
 
-        if (Logger.isDebugEnabled()) {
-            Logger.debug(command.toString());
+        if (Logger.isInfoEnabled()) {
+            Logger.info(command.toString());
         }
     }
 
