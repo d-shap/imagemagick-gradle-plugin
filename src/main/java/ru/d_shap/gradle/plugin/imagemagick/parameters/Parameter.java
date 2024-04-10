@@ -29,10 +29,10 @@ public interface Parameter {
     /**
      * Invoke the parameter.
      *
-     * @param args the args.
+     * @param context the context.
      *
      * @return the result of invocation.
      */
-    String invoke(Object... args);
+    String invoke(Context context);
 
 }
