@@ -45,7 +45,7 @@ public class PipelineConfiguration {
 
     private File _destinationDir;
 
-    private final ParameterConfiguration _parameterConfiguration;
+    private final ParametersConfiguration _parametersConfiguration;
 
     /**
      * Create new object.
@@ -60,7 +60,7 @@ public class PipelineConfiguration {
         _sourceBaseDir = null;
         _sourceFiles = null;
         _destinationDir = null;
-        _parameterConfiguration = _project.getObjects().newInstance(ParameterConfiguration.class);
+        _parametersConfiguration = _project.getObjects().newInstance(ParametersConfiguration.class);
     }
 
     /**
@@ -122,21 +122,21 @@ public class PipelineConfiguration {
     }
 
     /**
-     * Get the parameter configuration.
+     * Get the parameters configuration.
      *
-     * @return the parameter configuration.
+     * @return the parameters configuration.
      */
-    public ParameterConfiguration getParameterConfiguration() {
-        return _parameterConfiguration;
+    public ParametersConfiguration getParameterConfiguration() {
+        return _parametersConfiguration;
     }
 
     /**
-     * Set the parameter configuration.
+     * Set the parameters configuration.
      *
      * @param closure the closure.
      */
-    public void parameters(final Closure<? super ParameterConfiguration> closure) {
-        closure.setDelegate(_parameterConfiguration);
+    public void parameters(final Closure<? super ParametersConfiguration> closure) {
+        closure.setDelegate(_parametersConfiguration);
         closure.setResolveStrategy(Closure.DELEGATE_ONLY);
         closure.call();
     }

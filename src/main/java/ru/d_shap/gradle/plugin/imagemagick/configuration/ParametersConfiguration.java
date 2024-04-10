@@ -28,18 +28,18 @@ import ru.d_shap.gradle.plugin.imagemagick.parameters.Parameter;
 import ru.d_shap.gradle.plugin.imagemagick.parameters.SourceFileParameter;
 
 /**
- * The parameter configuration.
+ * The parameters configuration.
  *
  * @author Dmitry Shapovalov
  */
-public class ParameterConfiguration {
+public class ParametersConfiguration {
 
     private final List<Parameter> _parameters;
 
     /**
      * Create new object.
      */
-    public ParameterConfiguration() {
+    public ParametersConfiguration() {
         super();
         _parameters = new ArrayList<>();
     }
