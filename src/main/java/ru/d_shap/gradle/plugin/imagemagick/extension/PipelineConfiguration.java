@@ -147,7 +147,7 @@ public class PipelineConfiguration {
      *
      * @param action the action.
      */
-    public void params(final Action<? super ParameterConfiguration> action) {
+    public void parameters(final Action<? super ParameterConfiguration> action) {
         action.execute(_parameterConfiguration);
     }
 
