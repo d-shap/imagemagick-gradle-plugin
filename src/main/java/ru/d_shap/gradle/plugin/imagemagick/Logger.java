@@ -30,10 +30,19 @@ public final class Logger {
 
     private static final String LOGGER_NAME = "imagemagick";
 
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LOGGER_NAME);
+    private static final org.slf4j.Logger LOGGER_INSTANCE = LoggerFactory.getLogger(LOGGER_NAME);
 
     private Logger() {
         super();
+    }
+
+    /**
+     * Check if debug level is enabled.
+     *
+     * @return true, if debug level is enabled.
+     */
+    public static boolean isDebugEnabled() {
+        return LOGGER_INSTANCE.isDebugEnabled();
     }
 
     /**
@@ -42,7 +51,16 @@ public final class Logger {
      * @param message the message.
      */
     public static void debug(final String message) {
-        LOGGER.debug(message);
+        LOGGER_INSTANCE.debug(message);
+    }
+
+    /**
+     * Check if info level is enabled.
+     *
+     * @return true, if info level is enabled.
+     */
+    public static boolean isInfoEnabled() {
+        return LOGGER_INSTANCE.isInfoEnabled();
     }
 
     /**
@@ -51,7 +69,7 @@ public final class Logger {
      * @param message the message.
      */
     public static void info(final String message) {
-        LOGGER.info(message);
+        LOGGER_INSTANCE.info(message);
     }
 
 }
