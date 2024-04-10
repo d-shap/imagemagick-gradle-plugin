@@ -20,7 +20,6 @@
 package ru.d_shap.gradle.plugin.imagemagick;
 
 import java.io.File;
-import java.io.PrintStream;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +45,6 @@ public class ImageMagickGradleAction implements Action<Task> {
 
     private final ExtensionConfiguration _extensionConfiguration;
 
-    private final PrintStream _printStream;
-
     /**
      * Create new object.
      *
@@ -56,12 +53,11 @@ public class ImageMagickGradleAction implements Action<Task> {
     public ImageMagickGradleAction(final ExtensionConfiguration extensionConfiguration) {
         super();
         _extensionConfiguration = extensionConfiguration;
-        _printStream = System.out;
     }
 
     @Override
     public void execute(final Task task) {
-        _printStream.println("ImageMagick!");
+        Logger.info("Start processing images with ImageMagick");
         List<PipelineConfiguration> pipelineConfigurations = _extensionConfiguration.getPipelineConfigurations();
         for (PipelineConfiguration pipelineConfiguration : pipelineConfigurations) {
             ParametersConfiguration parametersConfiguration = pipelineConfiguration.getParameterConfiguration();
@@ -72,6 +68,7 @@ public class ImageMagickGradleAction implements Action<Task> {
                 processFile(parametersConfiguration, sourceBaseDir, sourceFile, destinationDir);
             }
         }
+        Logger.info("Finish processing images with ImageMagick");
     }
 
     private void processFile(final ParametersConfiguration parametersConfiguration, final File sourceBaseDir, final File sourceFile, final File destinationDir) {
@@ -99,7 +96,7 @@ public class ImageMagickGradleAction implements Action<Task> {
             command.append(' ').append(str);
         }
 
-        _printStream.println(command);
+        Logger.debug(command.toString());
     }
 
     private void ensureDestinationExists(final Path destinationFilePath) {
