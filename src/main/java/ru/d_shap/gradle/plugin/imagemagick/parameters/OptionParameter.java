@@ -44,7 +44,19 @@ public class OptionParameter implements Parameter {
 
     @Override
     public String invoke(final Context context) {
-        return "-" + _name + " " + _args.getClass() + "(" + _args + ")";
+        return "-" + _name + getArgs();
+    }
+
+    private String getArgs() {
+        if (_args instanceof Object[]) {
+            StringBuilder result = new StringBuilder();
+            for (Object arg : (Object[]) _args) {
+                result.append(' ').append(arg);
+            }
+            return result.toString();
+        } else {
+            return "";
+        }
     }
 
 }
