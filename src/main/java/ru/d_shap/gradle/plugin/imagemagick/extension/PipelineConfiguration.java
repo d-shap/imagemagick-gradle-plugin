@@ -21,6 +21,7 @@ package ru.d_shap.gradle.plugin.imagemagick.extension;
 
 import java.io.File;
 
+import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.FileTree;
@@ -45,6 +46,8 @@ public class PipelineConfiguration {
 
     private File _destinationDir;
 
+    private final ParameterConfiguration _parameterConfiguration;
+
     /**
      * Create new object.
      *
@@ -58,6 +61,7 @@ public class PipelineConfiguration {
         _sourceBaseDir = null;
         _sourceFiles = null;
         _destinationDir = null;
+        _parameterConfiguration = _project.getObjects().newInstance(ParameterConfiguration.class);
     }
 
     /**
@@ -127,6 +131,15 @@ public class PipelineConfiguration {
     public void dst(final String destinationDir) {
         File buildDir = _project.getBuildDir().getAbsoluteFile();
         _destinationDir = new File(buildDir, destinationDir);
+    }
+
+    /**
+     * Set the parameter configuration.
+     *
+     * @param action the action.
+     */
+    public void params(final Action<? super ParameterConfiguration> action) {
+        action.execute(_parameterConfiguration);
     }
 
 }
