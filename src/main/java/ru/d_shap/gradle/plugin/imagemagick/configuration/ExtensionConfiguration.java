@@ -17,7 +17,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-package ru.d_shap.gradle.plugin.imagemagick.extension;
+package ru.d_shap.gradle.plugin.imagemagick.configuration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ import org.gradle.api.Project;
  */
 public class ExtensionConfiguration {
 
-    private final NamedDomainObjectContainer<PipelineConfiguration> _container;
+    private final NamedDomainObjectContainer<PipelineConfiguration> _pipelineContainer;
 
     private final List<PipelineConfiguration> _pipelineConfigurations;
 
@@ -44,7 +44,7 @@ public class ExtensionConfiguration {
      */
     public ExtensionConfiguration(final Project project) {
         super();
-        _container = project.container(PipelineConfiguration.class);
+        _pipelineContainer = project.container(PipelineConfiguration.class);
         _pipelineConfigurations = new ArrayList<>();
     }
 
@@ -63,9 +63,9 @@ public class ExtensionConfiguration {
      * @param action the action.
      */
     public void pipelines(final Action<? super NamedDomainObjectContainer<PipelineConfiguration>> action) {
-        action.execute(_container);
+        action.execute(_pipelineContainer);
         _pipelineConfigurations.clear();
-        _pipelineConfigurations.addAll(_container);
+        _pipelineConfigurations.addAll(_pipelineContainer);
     }
 
 }
