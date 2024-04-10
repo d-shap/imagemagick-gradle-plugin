@@ -17,7 +17,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-package ru.d_shap.gradle.plugin.imagemagick;
+package ru.d_shap.gradle.plugin.imagemagick.extension;
 
 import java.io.File;
 
@@ -29,11 +29,11 @@ import org.gradle.api.tasks.util.PatternSet;
 import groovy.lang.Closure;
 
 /**
- * ImageMagick gradle plugin pipeline.
+ * The pipeline configuration.
  *
  * @author Dmitry Shapovalov
  */
-public class ImageMagickGradlePluginPipeline {
+public class PipelineConfiguration {
 
     private final Project _project;
 
@@ -51,7 +51,7 @@ public class ImageMagickGradlePluginPipeline {
      * @param project the project.
      * @param name    the name.
      */
-    public ImageMagickGradlePluginPipeline(final Project project, final String name) {
+    public PipelineConfiguration(final Project project, final String name) {
         super();
         _project = project;
         _name = name;

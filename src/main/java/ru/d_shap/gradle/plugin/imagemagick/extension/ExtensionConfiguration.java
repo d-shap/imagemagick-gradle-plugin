@@ -17,7 +17,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-package ru.d_shap.gradle.plugin.imagemagick;
+package ru.d_shap.gradle.plugin.imagemagick.extension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,24 +27,24 @@ import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Project;
 
 /**
- * ImageMagick gradle plugin extension.
+ * The extension configuration.
  *
  * @author Dmitry Shapovalov
  */
-public class ImageMagickGradlePluginExtension {
+public class ExtensionConfiguration {
 
-    private final NamedDomainObjectContainer<ImageMagickGradlePluginPipeline> _container;
+    private final NamedDomainObjectContainer<PipelineConfiguration> _container;
 
-    private final List<ImageMagickGradlePluginPipeline> _pipelines;
+    private final List<PipelineConfiguration> _pipelines;
 
     /**
      * Create new object.
      *
      * @param project the project.
      */
-    public ImageMagickGradlePluginExtension(final Project project) {
+    public ExtensionConfiguration(final Project project) {
         super();
-        _container = project.container(ImageMagickGradlePluginPipeline.class);
+        _container = project.container(PipelineConfiguration.class);
         _pipelines = new ArrayList<>();
     }
 
@@ -53,7 +53,7 @@ public class ImageMagickGradlePluginExtension {
      *
      * @return the pipelines.
      */
-    public List<ImageMagickGradlePluginPipeline> getPipelines() {
+    public List<PipelineConfiguration> getPipelines() {
         return _pipelines;
     }
 
@@ -62,7 +62,7 @@ public class ImageMagickGradlePluginExtension {
      *
      * @param action the action.
      */
-    public void pipelines(final Action<? super NamedDomainObjectContainer<ImageMagickGradlePluginPipeline>> action) {
+    public void pipelines(final Action<? super NamedDomainObjectContainer<PipelineConfiguration>> action) {
         action.execute(_container);
         _pipelines.clear();
         _pipelines.addAll(_container);
