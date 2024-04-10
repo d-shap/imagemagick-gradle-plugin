@@ -21,7 +21,6 @@ package ru.d_shap.gradle.plugin.imagemagick.extension;
 
 import java.io.File;
 
-import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.FileTree;
@@ -145,10 +144,12 @@ public class PipelineConfiguration {
     /**
      * Set the parameter configuration.
      *
-     * @param action the action.
+     * @param closure the closure.
      */
-    public void parameters(final Action<? super ParameterConfiguration> action) {
-        action.execute(_parameterConfiguration);
+    public void parameters(final Closure<? super ParameterConfiguration> closure) {
+        closure.setDelegate(_parameterConfiguration);
+        closure.setResolveStrategy(Closure.DELEGATE_ONLY);
+        closure.call();
     }
 
 }
