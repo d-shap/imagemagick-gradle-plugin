@@ -80,15 +80,11 @@ public class ImageMagickGradleAction implements Action<Task> {
     }
 
     private void processFile(final ParametersConfiguration parametersConfiguration, final File sourceBaseDir, final File sourceFile, final File destinationDir) {
-        Path sourceBasePath = sourceBaseDir.toPath();
-        Path sourceFilePath = sourceFile.toPath();
-        Path sourceRelativePath = sourceBasePath.relativize(sourceFilePath);
-        Path destinationFilePath = destinationDir.toPath();
-        destinationFilePath = destinationFilePath.resolve(sourceRelativePath);
-
+        Path sourceFilePath = getSourceFilePath(sourceFile);
+        Path destinationFilePath = getDestinationFilePath(sourceBaseDir, sourceFile, destinationDir);
         ensureDestinationExists(destinationFilePath);
-
         Context context = new Context(sourceFilePath, destinationFilePath);
+
         List<Parameter> parameters = parametersConfiguration.getParameters();
         List<String> strs = new ArrayList<>();
         for (Parameter parameter : parameters) {
@@ -107,6 +103,18 @@ public class ImageMagickGradleAction implements Action<Task> {
         if (Logger.isInfoEnabled()) {
             Logger.info(command.toString());
         }
+    }
+
+    private Path getSourceFilePath(final File sourceFile) {
+        return sourceFile.toPath();
+    }
+
+    private Path getDestinationFilePath(final File sourceBaseDir, final File sourceFile, final File destinationDir) {
+        Path sourceBasePath = sourceBaseDir.toPath();
+        Path sourceFilePath = sourceFile.toPath();
+        Path sourceRelativePath = sourceBasePath.relativize(sourceFilePath);
+        Path destinationFilePath = destinationDir.toPath();
+        return destinationFilePath.resolve(sourceRelativePath);
     }
 
     private void ensureDestinationExists(final Path destinationFilePath) {
