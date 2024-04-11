@@ -29,6 +29,10 @@ import java.nio.file.Path;
  */
 public abstract class Parameter {
 
+    Parameter() {
+        super();
+    }
+
     /**
      * Invoke the parameter.
      *
