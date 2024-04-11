@@ -27,6 +27,9 @@ import ru.d_shap.gradle.plugin.imagemagick.parameters.OptionParameter;
 import ru.d_shap.gradle.plugin.imagemagick.parameters.Parameter;
 import ru.d_shap.gradle.plugin.imagemagick.parameters.SourceFileParameter;
 
+import groovy.lang.Closure;
+import groovy.util.Eval;
+
 /**
  * The parameters configuration.
  *
@@ -65,7 +68,29 @@ public class ParametersConfiguration {
      * Add the destination file parameter.
      */
     public void destinationFile() {
-        Parameter parameter = new DestinationFileParameter();
+        Parameter parameter = new DestinationFileParameter(null);
+        _parameters.add(parameter);
+    }
+
+    /**
+     * Add the destination file parameter.
+     *
+     * @param fileName the file name.
+     */
+    @SuppressWarnings("unchecked")
+    public void destinationFile(final String fileName) {
+        Closure<String> closure = (Closure<String>) Eval.me("{ name, extension -> '" + fileName + "' }");
+        Parameter parameter = new DestinationFileParameter(closure);
+        _parameters.add(parameter);
+    }
+
+    /**
+     * Add the destination file parameter.
+     *
+     * @param closure the closure.
+     */
+    public void destinationFile(final Closure<String> closure) {
+        Parameter parameter = new DestinationFileParameter(closure);
         _parameters.add(parameter);
     }
 
