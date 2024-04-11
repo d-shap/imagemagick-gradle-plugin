@@ -108,7 +108,11 @@ public class ImageMagickGradleAction implements Action<Task> {
     }
 
     private Path getSourceFilePath(final File sourceFile) {
-        return sourceFile.toPath();
+        if (sourceFile == null) {
+            return null;
+        } else {
+            return sourceFile.toPath();
+        }
     }
 
     private Path getDestinationFilePath(final File sourceBaseDir, final File sourceFile, final File destinationDir) {
