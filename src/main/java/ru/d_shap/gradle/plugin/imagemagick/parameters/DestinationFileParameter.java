@@ -31,30 +31,39 @@ import groovy.lang.Closure;
  */
 public class DestinationFileParameter implements Parameter {
 
-    private final Closure<String> _closure;
+    private final Closure<?> _closure;
 
     /**
      * Create new object.
      *
      * @param closure the closure.
      */
-    public DestinationFileParameter(final Closure<String> closure) {
+    public DestinationFileParameter(final Closure<?> closure) {
         super();
         _closure = closure;
     }
 
     @Override
     public String invoke(final Context context) {
+        Path destinationFilePath;
         if (_closure == null) {
-            Path destinationFilePath = context.getDestinationFilePath();
-            return getPath(destinationFilePath);
+            destinationFilePath = context.getDestinationFilePath();
         } else {
-            String fileName = context.getDestinationFileName();
-            String fileExtension = context.getDestinationFileExtension();
-            String destinationFileNameFull = _closure.call(fileName, fileExtension);
+            String destinationFileNameFull = rename(context);
             Path destinationFileParentPath = context.getDestinationFileParentPath();
-            Path destinationFilePath = destinationFileParentPath.resolve(destinationFileNameFull);
-            return getPath(destinationFilePath);
+            destinationFilePath = destinationFileParentPath.resolve(destinationFileNameFull);
+        }
+        return getPath(destinationFilePath);
+    }
+
+    private String rename(final Context context) {
+        String fileName = context.getDestinationFileName();
+        String fileExtension = context.getDestinationFileExtension();
+        Object callResult = _closure.call(fileName, fileExtension);
+        if (callResult instanceof String) {
+            return (String) callResult;
+        } else {
+            return callResult.toString();
         }
     }
 
