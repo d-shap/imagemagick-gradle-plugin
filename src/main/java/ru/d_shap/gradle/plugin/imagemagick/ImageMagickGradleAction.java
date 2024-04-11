@@ -66,8 +66,12 @@ public class ImageMagickGradleAction implements Action<Task> {
             File sourceBaseDir = pipelineConfiguration.getSourceBaseDir();
             FileTree sourceFiles = pipelineConfiguration.getSourceFiles();
             File destinationDir = pipelineConfiguration.getDestinationDir();
-            for (File sourceFile : sourceFiles) {
-                processFile(parametersConfiguration, sourceBaseDir, sourceFile, destinationDir);
+            if (sourceFiles == null) {
+                processFile(parametersConfiguration, null, null, destinationDir);
+            } else {
+                for (File sourceFile : sourceFiles) {
+                    processFile(parametersConfiguration, sourceBaseDir, sourceFile, destinationDir);
+                }
             }
         }
         if (Logger.isWarnEnabled()) {
