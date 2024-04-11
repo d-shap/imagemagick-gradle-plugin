@@ -42,18 +42,18 @@ public abstract class Parameter {
      */
     public abstract String invoke(Context context);
 
-    final String getPath(final Path path) {
-        File file = path.normalize().toFile();
-        String absolutePath = file.getAbsolutePath();
-        return "\"" + absolutePath + "\"";
-    }
-
     final String toString(final Object object) {
         if (object instanceof String) {
             return (String) object;
         } else {
             return object.toString();
         }
+    }
+
+    final String getAbsolutePath(final Path path) {
+        File file = path.normalize().toFile();
+        String absolutePath = file.getAbsolutePath();
+        return "\"" + absolutePath + "\"";
     }
 
 }

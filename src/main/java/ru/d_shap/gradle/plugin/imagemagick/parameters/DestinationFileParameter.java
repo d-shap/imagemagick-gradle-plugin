@@ -52,7 +52,7 @@ public class DestinationFileParameter extends Parameter {
             Path destinationFileParentPath = context.getDestinationFileParentPath();
             destinationFilePath = destinationFileParentPath.resolve(destinationFileNameFull);
         }
-        return getPath(destinationFilePath);
+        return getAbsolutePath(destinationFilePath);
     }
 
     private String rename(final Context context) {

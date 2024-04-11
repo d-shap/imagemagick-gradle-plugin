@@ -38,7 +38,7 @@ public class SourceFileParameter extends Parameter {
     @Override
     public String invoke(final Context context) {
         Path sourceFilePath = context.getSourceFilePath();
-        return getPath(sourceFilePath);
+        return getAbsolutePath(sourceFilePath);
     }
 
 }
