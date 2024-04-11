@@ -21,6 +21,10 @@ package ru.d_shap.gradle.plugin.imagemagick.parameters;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
+
+import groovy.lang.Closure;
 
 /**
  * The destination file parameter.
@@ -29,18 +33,38 @@ import java.nio.file.Path;
  */
 public class DestinationFileParameter implements Parameter {
 
+    private final Closure<String> _closure;
+
     /**
      * Create new object.
+     *
+     * @param closure the closure.
      */
-    public DestinationFileParameter() {
+    public DestinationFileParameter(final Closure<String> closure) {
         super();
+        _closure = closure;
     }
 
     @Override
     public String invoke(final Context context) {
-        Path destinationFilePath = context.getDestinationFilePath();
-        destinationFilePath = destinationFilePath.normalize();
-        File file = destinationFilePath.toFile();
+        if (_closure == null) {
+            Path destinationFilePath = context.getDestinationFilePath();
+            return getPath(destinationFilePath);
+        } else {
+            Map<String, String> delegate = new HashMap<>();
+            delegate.put("name", context.getDestinationFileName());
+            delegate.put("extension", context.getDestinationFileExtension());
+            _closure.setDelegate(delegate);
+            _closure.setResolveStrategy(Closure.DELEGATE_ONLY);
+            String destinationFileNameFull = _closure.call();
+            Path destinationFileParentPath = context.getDestinationFileParentPath();
+            Path destinationFilePath = destinationFileParentPath.resolve(destinationFileNameFull);
+            return getPath(destinationFilePath);
+        }
+    }
+
+    private String getPath(final Path path) {
+        File file = path.normalize().toFile();
         String absolutePath = file.getAbsolutePath();
         return "\"" + absolutePath + "\"";
     }
