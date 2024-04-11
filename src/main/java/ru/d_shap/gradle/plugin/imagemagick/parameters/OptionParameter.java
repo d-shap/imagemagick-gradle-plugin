@@ -51,21 +51,13 @@ public class OptionParameter extends Parameter {
         if (_args instanceof Object[]) {
             StringBuilder result = new StringBuilder();
             for (Object arg : (Object[]) _args) {
-                String argStr = getArgStr(arg);
+                String argStr = toString(arg);
                 argStr = getProcessedArgStr(argStr);
                 result.append(argStr);
             }
             return result.toString();
         } else {
             return "";
-        }
-    }
-
-    private String getArgStr(final Object arg) {
-        if (arg instanceof String) {
-            return (String) arg;
-        } else {
-            return arg.toString();
         }
     }
 

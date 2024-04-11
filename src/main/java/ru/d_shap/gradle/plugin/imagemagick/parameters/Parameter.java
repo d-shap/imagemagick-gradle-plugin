@@ -48,4 +48,12 @@ public abstract class Parameter {
         return "\"" + absolutePath + "\"";
     }
 
+    final String toString(final Object object) {
+        if (object instanceof String) {
+            return (String) object;
+        } else {
+            return object.toString();
+        }
+    }
+
 }
