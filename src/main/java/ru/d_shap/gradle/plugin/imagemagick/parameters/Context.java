@@ -32,6 +32,12 @@ public class Context {
 
     private final Path _destinationFilePath;
 
+    private final Path _destinationFileParentPath;
+
+    private final String _destinationFileName;
+
+    private final String _destinationFileExtension;
+
     /**
      * Create new object.
      *
@@ -42,6 +48,16 @@ public class Context {
         super();
         _sourceFilePath = sourceFilePath;
         _destinationFilePath = destinationFilePath;
+        _destinationFileParentPath = _destinationFilePath.getParent();
+        String destinationFileNameFull = _destinationFilePath.toFile().getName();
+        int destinationFileExtensionIndex = destinationFileNameFull.lastIndexOf('.');
+        if (destinationFileExtensionIndex >= 0) {
+            _destinationFileName = destinationFileNameFull.substring(0, destinationFileExtensionIndex);
+            _destinationFileExtension = destinationFileNameFull.substring(destinationFileExtensionIndex + 1);
+        } else {
+            _destinationFileName = destinationFileNameFull;
+            _destinationFileExtension = null;
+        }
     }
 
     /**
@@ -60,6 +76,33 @@ public class Context {
      */
     public Path getDestinationFilePath() {
         return _destinationFilePath;
+    }
+
+    /**
+     * Get the destination file parent path.
+     *
+     * @return the destination file parent path.
+     */
+    public Path getDestinationFileParentPath() {
+        return _destinationFileParentPath;
+    }
+
+    /**
+     * Get the destination file name.
+     *
+     * @return the destination file name.
+     */
+    public String getDestinationFileName() {
+        return _destinationFileName;
+    }
+
+    /**
+     * Get the destination file extension.
+     *
+     * @return the destination file extension.
+     */
+    public String getDestinationFileExtension() {
+        return _destinationFileExtension;
     }
 
 }
