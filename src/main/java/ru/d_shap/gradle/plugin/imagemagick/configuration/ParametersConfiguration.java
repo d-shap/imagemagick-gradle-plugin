@@ -77,11 +77,9 @@ public class ParametersConfiguration {
      *
      * @param fileName the file name.
      */
-    @SuppressWarnings("unchecked")
     public void destinationFile(final String fileName) {
-        Closure<String> closure = (Closure<String>) Eval.me("{ name, extension -> '" + fileName + "' }");
-        Parameter parameter = new DestinationFileParameter(closure);
-        _parameters.add(parameter);
+        Closure<?> closure = (Closure<?>) Eval.me("{ name, extension -> '" + fileName + "' }");
+        destinationFile(closure);
     }
 
     /**
@@ -89,7 +87,7 @@ public class ParametersConfiguration {
      *
      * @param closure the closure.
      */
-    public void destinationFile(final Closure<String> closure) {
+    public void destinationFile(final Closure<?> closure) {
         Parameter parameter = new DestinationFileParameter(closure);
         _parameters.add(parameter);
     }
