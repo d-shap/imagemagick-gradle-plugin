@@ -21,8 +21,6 @@ package ru.d_shap.gradle.plugin.imagemagick.parameters;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
 
 import groovy.lang.Closure;
 
@@ -51,12 +49,9 @@ public class DestinationFileParameter implements Parameter {
             Path destinationFilePath = context.getDestinationFilePath();
             return getPath(destinationFilePath);
         } else {
-            Map<String, String> delegate = new HashMap<>();
-            delegate.put("name", context.getDestinationFileName());
-            delegate.put("extension", context.getDestinationFileExtension());
-            _closure.setDelegate(delegate);
-            _closure.setResolveStrategy(Closure.DELEGATE_ONLY);
-            String destinationFileNameFull = _closure.call();
+            String fileName = context.getDestinationFileName();
+            String fileExtension = context.getDestinationFileExtension();
+            String destinationFileNameFull = _closure.call(fileName, fileExtension);
             Path destinationFileParentPath = context.getDestinationFileParentPath();
             Path destinationFilePath = destinationFileParentPath.resolve(destinationFileNameFull);
             return getPath(destinationFilePath);
