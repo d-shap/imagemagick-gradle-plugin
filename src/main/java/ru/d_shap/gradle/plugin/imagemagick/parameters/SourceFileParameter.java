@@ -39,8 +39,11 @@ public class SourceFileParameter implements Parameter {
     @Override
     public String invoke(final Context context) {
         Path sourceFilePath = context.getSourceFilePath();
-        sourceFilePath = sourceFilePath.normalize();
-        File file = sourceFilePath.toFile();
+        return getPath(sourceFilePath);
+    }
+
+    private String getPath(final Path path) {
+        File file = path.normalize().toFile();
         String absolutePath = file.getAbsolutePath();
         return "\"" + absolutePath + "\"";
     }
