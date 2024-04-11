@@ -43,6 +43,8 @@ public class ImageMagickGradleAction implements Action<Task> {
 
     private static final String COMMAND = "magick";
 
+    private static final String DEFAULT_FILE_NAME = "fileName.ext";
+
     private final ExtensionConfiguration _extensionConfiguration;
 
     /**
@@ -110,11 +112,15 @@ public class ImageMagickGradleAction implements Action<Task> {
     }
 
     private Path getDestinationFilePath(final File sourceBaseDir, final File sourceFile, final File destinationDir) {
-        Path sourceBasePath = sourceBaseDir.toPath();
-        Path sourceFilePath = sourceFile.toPath();
-        Path sourceRelativePath = sourceBasePath.relativize(sourceFilePath);
         Path destinationFilePath = destinationDir.toPath();
-        return destinationFilePath.resolve(sourceRelativePath);
+        if (sourceBaseDir == null || sourceFile == null) {
+            return destinationFilePath.resolve(DEFAULT_FILE_NAME);
+        } else {
+            Path sourceBasePath = sourceBaseDir.toPath();
+            Path sourceFilePath = sourceFile.toPath();
+            Path sourceRelativePath = sourceBasePath.relativize(sourceFilePath);
+            return destinationFilePath.resolve(sourceRelativePath);
+        }
     }
 
     private void ensureDestinationExists(final Path destinationFilePath) {
