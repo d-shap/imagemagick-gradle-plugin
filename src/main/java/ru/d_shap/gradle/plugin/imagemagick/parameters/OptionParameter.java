@@ -24,7 +24,7 @@ package ru.d_shap.gradle.plugin.imagemagick.parameters;
  *
  * @author Dmitry Shapovalov
  */
-public class OptionParameter implements Parameter {
+public class OptionParameter extends Parameter {
 
     private final String _name;
 

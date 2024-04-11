@@ -19,7 +19,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick.parameters;
 
-import java.io.File;
 import java.nio.file.Path;
 
 /**
@@ -27,7 +26,7 @@ import java.nio.file.Path;
  *
  * @author Dmitry Shapovalov
  */
-public class SourceFileParameter implements Parameter {
+public class SourceFileParameter extends Parameter {
 
     /**
      * Create new object.
@@ -40,12 +39,6 @@ public class SourceFileParameter implements Parameter {
     public String invoke(final Context context) {
         Path sourceFilePath = context.getSourceFilePath();
         return getPath(sourceFilePath);
-    }
-
-    private String getPath(final Path path) {
-        File file = path.normalize().toFile();
-        String absolutePath = file.getAbsolutePath();
-        return "\"" + absolutePath + "\"";
     }
 
 }

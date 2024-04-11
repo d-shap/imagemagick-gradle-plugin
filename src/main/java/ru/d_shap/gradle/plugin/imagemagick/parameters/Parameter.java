@@ -19,12 +19,15 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick.parameters;
 
+import java.io.File;
+import java.nio.file.Path;
+
 /**
  * The parameter.
  *
  * @author Dmitry Shapovalov
  */
-public interface Parameter {
+public abstract class Parameter {
 
     /**
      * Invoke the parameter.
@@ -33,6 +36,12 @@ public interface Parameter {
      *
      * @return the result of invocation.
      */
-    String invoke(Context context);
+    public abstract String invoke(Context context);
+
+    final String getPath(final Path path) {
+        File file = path.normalize().toFile();
+        String absolutePath = file.getAbsolutePath();
+        return "\"" + absolutePath + "\"";
+    }
 
 }

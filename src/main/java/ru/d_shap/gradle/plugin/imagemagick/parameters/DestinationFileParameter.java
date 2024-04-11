@@ -19,7 +19,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick.parameters;
 
-import java.io.File;
 import java.nio.file.Path;
 
 import groovy.lang.Closure;
@@ -29,7 +28,7 @@ import groovy.lang.Closure;
  *
  * @author Dmitry Shapovalov
  */
-public class DestinationFileParameter implements Parameter {
+public class DestinationFileParameter extends Parameter {
 
     private final Closure<?> _closure;
 
@@ -65,12 +64,6 @@ public class DestinationFileParameter implements Parameter {
         } else {
             return callResult.toString();
         }
-    }
-
-    private String getPath(final Path path) {
-        File file = path.normalize().toFile();
-        String absolutePath = file.getAbsolutePath();
-        return "\"" + absolutePath + "\"";
     }
 
 }
