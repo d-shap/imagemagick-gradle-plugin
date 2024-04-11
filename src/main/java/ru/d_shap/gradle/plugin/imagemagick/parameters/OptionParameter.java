@@ -51,7 +51,17 @@ public class OptionParameter implements Parameter {
         if (_args instanceof Object[]) {
             StringBuilder result = new StringBuilder();
             for (Object arg : (Object[]) _args) {
-                result.append(' ').append(arg);
+                String str;
+                if (arg instanceof String) {
+                    str = (String) arg;
+                } else {
+                    str = arg.toString();
+                }
+                if (str.startsWith(":")) {
+                    result.append(str);
+                } else {
+                    result.append(' ').append(str);
+                }
             }
             return result.toString();
         } else {
