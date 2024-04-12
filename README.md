@@ -61,6 +61,43 @@ imagemagick {
 }
 ```
 
+### Source files
+A command to pass a source file to `magick` command:
+* `sourceFile()`
+
+### Destination files
+Commands to pass a destination file to `magick` command:
+* `destinationFile()`
+* `destinationFile('name.ext')`
+* `destinationFile({ name, ext -> "${name}.${ext}" })`
+
+### Parameters
+Parameter name matches the function name in parameters block:
+* `crop(geometry)`
+* `monochrome()`
+* `rotate(degrees)`
+
+In this case parameters are passed with leading `-` symbol, for example `magick -crop geometry -monochrome -rotate degrees`
+
+Some parameters don't have a leading `-` symbol, for example `canvas:none`.
+In this case a closure should be passed to the function:
+```
+canvas({
+    prefix = ''
+    args = [':none']
+})
+```
+
+Some parameters have `-` symbol in their name, for example `-contrast-stretch geometry`.
+Symbol `-` is not allowed in function names, so function `contrast-stretch()` can't be defined.
+In this case next closure should be used:
+```
+contrast({
+    prefix = '-'
+    args = ['-stretch', geometry]
+})
+```
+
 ## Examples
 
 #### Create a logo image
