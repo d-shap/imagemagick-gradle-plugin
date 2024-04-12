@@ -90,24 +90,7 @@ public class ImageMagickGradleAction implements Action<Task> {
 
         Context context = new Context(sourceFilePath, destinationFilePath);
         CommandLine commandLine = createCommandLine(context, parametersConfiguration);
-
-        try {
-            DefaultExecutor executor = DefaultExecutor.builder().get();
-            int exitValue = executor.execute(commandLine);
-            if (exitValue == 0) {
-                if (Logger.isWarnEnabled()) {
-                    Logger.warn(sourceFilePath + " processed");
-                }
-            } else {
-                if (Logger.isErrorEnabled()) {
-                    Logger.error(sourceFilePath + " not processed with exit value " + exitValue);
-                }
-            }
-        } catch (IOException ex) {
-            if (Logger.isErrorEnabled()) {
-                Logger.error("Exception in ImageMagick execution", ex);
-            }
-        }
+        executeCommandLine(commandLine, sourceFilePath, destinationFilePath);
     }
 
     private Path getSourceFilePath(final File sourceFile) {
@@ -156,6 +139,26 @@ public class ImageMagickGradleAction implements Action<Task> {
             Logger.info(builder.toString());
         }
         return commandLine;
+    }
+
+    private void executeCommandLine(final CommandLine commandLine, final Path sourceFilePath, final Path destinationFilePath) {
+        try {
+            DefaultExecutor executor = DefaultExecutor.builder().get();
+            int exitValue = executor.execute(commandLine);
+            if (exitValue == 0) {
+                if (Logger.isWarnEnabled()) {
+                    Logger.warn(sourceFilePath + " processed");
+                }
+            } else {
+                if (Logger.isErrorEnabled()) {
+                    Logger.error(sourceFilePath + " not processed with exit value " + exitValue);
+                }
+            }
+        } catch (IOException ex) {
+            if (Logger.isErrorEnabled()) {
+                Logger.error("Exception in ImageMagick execution", ex);
+            }
+        }
     }
 
 }
