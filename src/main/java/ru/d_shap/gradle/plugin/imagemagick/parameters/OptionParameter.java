@@ -19,7 +19,10 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick.parameters;
 
+import java.util.Arrays;
 import java.util.List;
+
+import groovy.lang.Closure;
 
 /**
  * The option parameter.
@@ -46,9 +49,12 @@ public class OptionParameter extends Parameter {
 
     @Override
     void invoke(final Context context, final List<String> list) {
-        list.add("-" + _name);
-        if (_args instanceof Object[]) {
-            for (Object arg : (Object[]) _args) {
+        Option option = createOption();
+        list.add(option.getPrefix() + option.getName());
+
+        List<Object> args = option.getArgs();
+        if (args != null) {
+            for (Object arg : args) {
                 String argStr = toString(arg);
                 if (concatArgWithPrevious(argStr)) {
                     int lastIndex = list.size() - 1;
@@ -60,6 +66,23 @@ public class OptionParameter extends Parameter {
                 }
             }
         }
+    }
+
+    private Option createOption() {
+        Option option = new Option(_name);
+        if (_args instanceof Object[]) {
+            if (((Object[]) _args).length == 1 && ((Object[]) _args)[0] instanceof Closure) {
+                Closure<?> closure = (Closure<?>) ((Object[]) _args)[0];
+                closure.setDelegate(option);
+                closure.setResolveStrategy(Closure.DELEGATE_ONLY);
+                closure.call();
+            } else {
+                option.setPrefix("-");
+                List<Object> args = Arrays.asList((Object[]) _args);
+                option.setArgs(args);
+            }
+        }
+        return option;
     }
 
     private boolean concatArgWithPrevious(final String arg) {
