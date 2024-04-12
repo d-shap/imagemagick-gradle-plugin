@@ -28,17 +28,31 @@ import java.util.List;
  */
 public class Option {
 
+    private final String _name;
+
     private String _prefix;
 
-    private List<String> _args;
+    private List<Object> _args;
 
     /**
      * Create new object.
+     *
+     * @param name the name.
      */
-    public Option() {
+    public Option(final String name) {
         super();
+        _name = name;
         _prefix = null;
         _args = null;
+    }
+
+    /**
+     * Get the name.
+     *
+     * @return the name.
+     */
+    public String getName() {
+        return _name;
     }
 
     /**
@@ -64,7 +78,7 @@ public class Option {
      *
      * @return the args.
      */
-    public List<String> getArgs() {
+    public List<Object> getArgs() {
         return _args;
     }
 
@@ -73,7 +87,7 @@ public class Option {
      *
      * @param args the args.
      */
-    public void setArgs(final List<String> args) {
+    public void setArgs(final List<Object> args) {
         _args = args;
     }
 
