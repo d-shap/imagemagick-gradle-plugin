@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.apache.commons.exec.CommandLine;
 import org.gradle.api.Action;
-import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileTree;
 
@@ -46,19 +45,15 @@ public class ImageMagickGradleAction implements Action<Task> {
 
     private static final String DEFAULT_FILE_NAME = "fileName.ext";
 
-    private final Project _project;
-
     private final ExtensionConfiguration _extensionConfiguration;
 
     /**
      * Create new object.
      *
-     * @param project                the project.
      * @param extensionConfiguration ImageMagick gradle plugin extension.
      */
-    public ImageMagickGradleAction(final Project project, final ExtensionConfiguration extensionConfiguration) {
+    public ImageMagickGradleAction(final ExtensionConfiguration extensionConfiguration) {
         super();
-        _project = project;
         _extensionConfiguration = extensionConfiguration;
     }
 
@@ -90,7 +85,7 @@ public class ImageMagickGradleAction implements Action<Task> {
         Path sourceFilePath = getSourceFilePath(sourceFile);
         Path destinationFilePath = getDestinationFilePath(sourceBaseDir, sourceFile, destinationDir);
         ensureDestinationExists(destinationFilePath);
-        Context context = new Context(_project, sourceFilePath, destinationFilePath);
+        Context context = new Context(sourceFilePath, destinationFilePath);
 
         CommandLine cmdLine = new CommandLine(COMMAND);
         List<Parameter> parameters = parametersConfiguration.getParameters();
