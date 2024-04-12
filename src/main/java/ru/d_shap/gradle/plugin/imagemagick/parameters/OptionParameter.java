@@ -77,9 +77,9 @@ public class OptionParameter extends Parameter {
                 closure.setResolveStrategy(Closure.DELEGATE_ONLY);
                 closure.call();
             } else {
-                option.setPrefix("-");
+                option.prefix("-");
                 List<Object> args = Arrays.asList((Object[]) _args);
-                option.setArgs(args);
+                option.args(args);
             }
         }
         return option;
