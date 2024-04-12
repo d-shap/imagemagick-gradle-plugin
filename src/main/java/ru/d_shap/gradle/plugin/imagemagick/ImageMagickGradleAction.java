@@ -19,13 +19,17 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.List;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.ExecuteStreamHandler;
+import org.apache.commons.exec.PumpStreamHandler;
 import org.gradle.api.Action;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileTree;
@@ -144,21 +148,24 @@ public class ImageMagickGradleAction implements Action<Task> {
     private void executeCommandLine(final CommandLine commandLine, final Path sourceFilePath) {
         try {
             DefaultExecutor executor = DefaultExecutor.builder().get();
-            int exitValue = executor.execute(commandLine);
-            if (exitValue == 0) {
-                if (sourceFilePath != null && Logger.isWarnEnabled()) {
-                    Logger.warn(sourceFilePath + " processed");
-                }
-                if (sourceFilePath == null && Logger.isWarnEnabled()) {
-                    Logger.warn("A file was created");
-                }
-            } else {
-                if (sourceFilePath != null && Logger.isErrorEnabled()) {
-                    Logger.error(sourceFilePath + " not processed, exit value " + exitValue);
-                }
-                if (sourceFilePath == null && Logger.isErrorEnabled()) {
-                    Logger.error("A file was not created, exit value " + exitValue);
-                }
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ByteArrayOutputStream errorOutputStream = new ByteArrayOutputStream();
+            ExecuteStreamHandler streamHandler = new PumpStreamHandler(outputStream, errorOutputStream);
+            executor.setStreamHandler(streamHandler);
+            executor.execute(commandLine);
+            String outputStr = new String(outputStream.toByteArray(), StandardCharsets.UTF_8);
+            if (outputStr.length() > 0 && Logger.isInfoEnabled()) {
+                Logger.info(outputStr);
+            }
+            String errorOutputStr = new String(errorOutputStream.toByteArray(), StandardCharsets.UTF_8);
+            if (errorOutputStr.length() > 0 && Logger.isWarnEnabled()) {
+                Logger.warn(errorOutputStr);
+            }
+            if (sourceFilePath != null && Logger.isWarnEnabled()) {
+                Logger.warn(sourceFilePath + " processed");
+            }
+            if (sourceFilePath == null && Logger.isWarnEnabled()) {
+                Logger.warn("A file was created");
             }
         } catch (IOException ex) {
             if (Logger.isErrorEnabled()) {
