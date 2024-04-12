@@ -9,6 +9,58 @@ magick identify logo.gif
 magick logo.gif win:
 ```
 
+## Configuration
+Apply an appropriate version of a plugin:
+```
+plugins {
+    id 'ru.d-shap.imagemagick' version '1.0'
+}
+```
+
+Configure the plugin with an `imagemagick` block.
+Configuration consist of a set of pipelines.
+Each pipeline is a set of commands applied to a set of source files.
+For example, one set of images should be converted from `.jpg` to `.png` format.
+Another set of images should be resized.
+```
+imagemagick {
+    pipelines {
+        convert {
+            ...
+        }
+        resize {
+            ...
+        }
+    }
+}
+```
+
+For each pipeline the following should be specified:
+* a set of source files
+* a destination folder
+* a set of commands, applied to the source files
+
+For example, to resize an image, next `magick` command is used
+```
+magick rose.jpg -resize 50% rose.png
+```
+The configuration will be
+```
+imagemagick {
+    pipelines {
+        resize {
+            src 'source', { include 'rose.jpg' }
+            dst 'gen'
+            parameters {
+                sourceFile()
+                resize('50%')
+                destinationFile('rose.png')
+            }
+        }
+    }
+}
+```
+
 ## Examples
 
 #### Create a logo image
