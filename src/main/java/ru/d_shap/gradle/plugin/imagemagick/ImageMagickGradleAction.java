@@ -87,23 +87,13 @@ public class ImageMagickGradleAction implements Action<Task> {
         Path sourceFilePath = getSourceFilePath(sourceFile);
         Path destinationFilePath = getDestinationFilePath(sourceBaseDir, sourceFile, destinationDir);
         ensureDestinationExists(destinationFilePath);
-        Context context = new Context(sourceFilePath, destinationFilePath);
 
-        CommandLine cmdLine = new CommandLine(COMMAND);
-        List<Parameter> parameters = parametersConfiguration.getParameters();
-        for (Parameter parameter : parameters) {
-            List<String> arguments = parameter.invoke(context);
-            for (String argument : arguments) {
-                cmdLine.addArgument(argument);
-            }
-        }
-        if (Logger.isInfoEnabled()) {
-            Logger.info(cmdLine.toString());
-        }
+        Context context = new Context(sourceFilePath, destinationFilePath);
+        CommandLine commandLine = createCommandLine(context, parametersConfiguration);
 
         try {
             DefaultExecutor executor = DefaultExecutor.builder().get();
-            int exitValue = executor.execute(cmdLine);
+            int exitValue = executor.execute(commandLine);
             if (exitValue == 0) {
                 if (Logger.isWarnEnabled()) {
                     Logger.warn(sourceFilePath + " processed");
@@ -146,6 +136,21 @@ public class ImageMagickGradleAction implements Action<Task> {
             File file = parentPath.toFile();
             file.mkdirs();
         }
+    }
+
+    private CommandLine createCommandLine(final Context context, final ParametersConfiguration parametersConfiguration) {
+        CommandLine commandLine = new CommandLine(COMMAND);
+        List<Parameter> parameters = parametersConfiguration.getParameters();
+        for (Parameter parameter : parameters) {
+            List<String> arguments = parameter.invoke(context);
+            for (String argument : arguments) {
+                commandLine.addArgument(argument);
+            }
+        }
+        if (Logger.isInfoEnabled()) {
+            Logger.info(commandLine.toString());
+        }
+        return commandLine;
     }
 
 }
