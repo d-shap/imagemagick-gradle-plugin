@@ -23,6 +23,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.plugins.ExtensionContainer;
+import org.gradle.api.tasks.TaskContainer;
 
 import ru.d_shap.gradle.plugin.imagemagick.configuration.ExtensionConfiguration;
 
@@ -48,9 +49,15 @@ public class ImageMagickGradlePlugin implements Plugin<Project> {
     public void apply(final Project project) {
         ExtensionContainer extensionContainer = project.getExtensions();
         ExtensionConfiguration extensionConfiguration = extensionContainer.create(EXTENSION_NAME, ExtensionConfiguration.class);
-        Task task = project.task(TASK_NAME);
-        ImageMagickGradleAction action = new ImageMagickGradleAction(extensionConfiguration);
-        task.doLast(action);
+        Task imageMagickTask = project.task(TASK_NAME);
+        ImageMagickGradleAction imageMagickAction = new ImageMagickGradleAction(extensionConfiguration);
+        imageMagickTask.doLast(imageMagickAction);
+
+        TaskContainer tasks = project.getTasks();
+        Task buildTask = tasks.getByName("build");
+        if (buildTask != null) {
+            buildTask.dependsOn(imageMagickTask);
+        }
     }
 
 }
