@@ -20,10 +20,12 @@
 package ru.d_shap.gradle.plugin.imagemagick;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
 import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecutor;
 import org.gradle.api.Action;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileTree;
@@ -95,9 +97,26 @@ public class ImageMagickGradleAction implements Action<Task> {
                 cmdLine.addArgument(argument);
             }
         }
-
         if (Logger.isInfoEnabled()) {
             Logger.info(cmdLine.toString());
+        }
+
+        try {
+            DefaultExecutor executor = DefaultExecutor.builder().get();
+            int exitValue = executor.execute(cmdLine);
+            if (exitValue == 0) {
+                if (Logger.isWarnEnabled()) {
+                    Logger.warn(sourceFilePath + " processed");
+                }
+            } else {
+                if (Logger.isErrorEnabled()) {
+                    Logger.error(sourceFilePath + " not processed with exit value " + exitValue);
+                }
+            }
+        } catch (IOException ex) {
+            if (Logger.isErrorEnabled()) {
+                Logger.error("Exception in ImageMagick execution", ex);
+            }
         }
     }
 
