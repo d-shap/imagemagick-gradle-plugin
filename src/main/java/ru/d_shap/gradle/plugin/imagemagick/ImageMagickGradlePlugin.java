@@ -54,9 +54,13 @@ public class ImageMagickGradlePlugin implements Plugin<Project> {
         imageMagickTask.doLast(imageMagickAction);
 
         TaskContainer tasks = project.getTasks();
-        Task buildTask = tasks.getByName("build");
-        if (buildTask != null) {
-            buildTask.dependsOn(imageMagickTask);
+        Task processResourcesTask = tasks.getByName("processResources");
+        if (processResourcesTask != null) {
+            processResourcesTask.dependsOn(imageMagickTask);
+        }
+        Task compileJavaTask = tasks.getByName("compileJava");
+        if (compileJavaTask != null) {
+            compileJavaTask.dependsOn(imageMagickTask);
         }
     }
 
