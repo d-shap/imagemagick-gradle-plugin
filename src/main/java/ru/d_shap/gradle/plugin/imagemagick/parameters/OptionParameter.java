@@ -92,10 +92,16 @@ public class OptionParameter extends Parameter {
         if (arg.startsWith("-")) {
             return true;
         }
+        if (arg.startsWith("+")) {
+            return true;
+        }
         if (arg.startsWith("@")) {
             return true;
         }
         if (arg.startsWith("[")) {
+            return true;
+        }
+        if (arg.startsWith("(")) {
             return true;
         }
         return false;
