@@ -158,8 +158,8 @@ public class ImageMagickGradleAction implements Action<Task> {
                 Logger.info(outputStr);
             }
             String errorOutputStr = new String(errorOutputStream.toByteArray(), StandardCharsets.UTF_8);
-            if (errorOutputStr.length() > 0 && Logger.isWarnEnabled()) {
-                Logger.warn(errorOutputStr);
+            if (errorOutputStr.length() > 0 && Logger.isErrorEnabled()) {
+                Logger.error(errorOutputStr);
             }
             if (sourceFilePath != null && Logger.isWarnEnabled()) {
                 Logger.warn(sourceFilePath + " processed");
