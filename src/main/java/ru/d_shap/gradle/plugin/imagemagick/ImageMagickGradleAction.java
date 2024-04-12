@@ -147,11 +147,19 @@ public class ImageMagickGradleAction implements Action<Task> {
             int exitValue = executor.execute(commandLine);
             if (exitValue == 0) {
                 if (Logger.isWarnEnabled()) {
-                    Logger.warn(sourceFilePath + " processed");
+                    if (sourceFilePath == null) {
+                        Logger.warn(destinationFilePath + " created");
+                    } else {
+                        Logger.warn(sourceFilePath + " processed");
+                    }
                 }
             } else {
                 if (Logger.isErrorEnabled()) {
-                    Logger.error(sourceFilePath + " not processed with exit value " + exitValue);
+                    if (sourceFilePath == null) {
+                        Logger.error(destinationFilePath + " not created, exit value " + exitValue);
+                    } else {
+                        Logger.error(sourceFilePath + " not processed, exit value " + exitValue);
+                    }
                 }
             }
         } catch (IOException ex) {
