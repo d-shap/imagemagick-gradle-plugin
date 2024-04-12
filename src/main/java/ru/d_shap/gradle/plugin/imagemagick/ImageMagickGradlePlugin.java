@@ -55,13 +55,9 @@ public class ImageMagickGradlePlugin implements Plugin<Project> {
 
         TaskContainer tasks = project.getTasks();
         Task processResourcesTask = tasks.getByName("processResources");
-        if (processResourcesTask != null) {
-            processResourcesTask.dependsOn(imageMagickTask);
-        }
+        processResourcesTask.dependsOn(imageMagickTask);
         Task compileJavaTask = tasks.getByName("compileJava");
-        if (compileJavaTask != null) {
-            compileJavaTask.dependsOn(imageMagickTask);
-        }
+        compileJavaTask.dependsOn(imageMagickTask);
     }
 
 }
