@@ -20,6 +20,7 @@
 package ru.d_shap.gradle.plugin.imagemagick.parameters;
 
 import java.nio.file.Path;
+import java.util.List;
 
 import groovy.lang.Closure;
 
@@ -43,7 +44,7 @@ public class DestinationFileParameter extends Parameter {
     }
 
     @Override
-    public String invoke(final Context context) {
+    void invoke(final Context context, final List<String> list) {
         Path destinationFilePath;
         if (_closure == null) {
             destinationFilePath = context.getDestinationFilePath();
@@ -52,7 +53,8 @@ public class DestinationFileParameter extends Parameter {
             Path destinationFileParentPath = context.getDestinationFileParentPath();
             destinationFilePath = destinationFileParentPath.resolve(destinationFileNameFull);
         }
-        return getAbsolutePath(destinationFilePath);
+        String absolutePath = getAbsolutePath(destinationFilePath);
+        list.add(absolutePath);
     }
 
     private String rename(final Context context) {
