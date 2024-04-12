@@ -148,7 +148,12 @@ public class ImageMagickGradleAction implements Action<Task> {
             }
         }
         if (Logger.isInfoEnabled()) {
-            Logger.info(commandLine.toString());
+            StringBuilder builder = new StringBuilder();
+            builder.append(commandLine.getExecutable());
+            for (String argument : commandLine.getArguments()) {
+                builder.append(' ').append(argument);
+            }
+            Logger.info(builder.toString());
         }
         return commandLine;
     }
