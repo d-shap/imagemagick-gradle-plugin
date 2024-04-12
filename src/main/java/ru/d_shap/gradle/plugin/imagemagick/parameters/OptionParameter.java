@@ -19,6 +19,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick.parameters;
 
+import java.util.List;
+
 /**
  * The option parameter.
  *
@@ -43,30 +45,32 @@ public class OptionParameter extends Parameter {
     }
 
     @Override
-    public String invoke(final Context context) {
-        return "-" + _name + getArgs();
-    }
-
-    private String getArgs() {
+    void invoke(final Context context, final List<String> list) {
+        list.add("-" + _name);
         if (_args instanceof Object[]) {
-            StringBuilder result = new StringBuilder();
             for (Object arg : (Object[]) _args) {
                 String argStr = toString(arg);
-                argStr = getProcessedArgStr(argStr);
-                result.append(argStr);
+                if (concatArgWithPrevious(argStr)) {
+                    int idx = list.size() - 1;
+                    list.set(idx, list.get(idx) + argStr);
+                } else {
+                    list.add(argStr);
+                }
             }
-            return result.toString();
-        } else {
-            return "";
         }
     }
 
-    private String getProcessedArgStr(final String arg) {
+    private boolean concatArgWithPrevious(final String arg) {
         if (arg.startsWith(":")) {
-            return arg;
-        } else {
-            return " " + arg;
+            return true;
         }
+        if (arg.startsWith("@")) {
+            return true;
+        }
+        if (arg.startsWith("[")) {
+            return true;
+        }
+        return false;
     }
 
 }
