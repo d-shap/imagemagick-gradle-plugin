@@ -20,7 +20,7 @@ plugins {
 Configure the plugin with an `imagemagick` block.
 Configuration consist of a set of pipelines.
 Each pipeline is a set of commands applied to a set of source files.
-For example, one set of images should be converted from `.jpg` to `.png` format.
+For example, one set of images should be converted from JPG to PNG format.
 Another set of images should be resized.
 ```
 imagemagick {
@@ -40,11 +40,11 @@ For each pipeline the following should be specified:
 * a destination folder
 * a set of commands, applied to the source files
 
-For example, to resize an image, next `magick` command is used
+For example, to resize an image, next `magick` command is used:
 ```
 magick rose.jpg -resize 50% rose.png
 ```
-The configuration will be
+The configuration will be the following:
 ```
 imagemagick {
     pipelines {
