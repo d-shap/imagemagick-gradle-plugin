@@ -26,7 +26,7 @@ imagemagick {
 magick logo: <<PROJECT_ROOT>>\build\gen\logo.gif
 ```
 
-#### Draw an image with draw commands
+#### Draw an image with multiple image-processing operations
 ##### Configuration
 ```
 imagemagick {
@@ -47,7 +47,7 @@ imagemagick {
                 fill('darkred')
                 stroke('magenta')
                 draw('text 25,60 \'Magick\'')
-                destinationFile('fuzzy-magick.png')
+                destinationFile('magick.png')
             }
         }
     }
@@ -55,7 +55,7 @@ imagemagick {
 ```
 ##### Executed command
 ```
-magick -size 320x85 canvas:none -font Bookman-DemiItalic -pointsize 72 -draw "text 25,60 'Magick" -channel RGBA -blur 0x6 -fill darkred -stroke magenta -draw "text 25,60 'Magick" E:\projects\android-projects\super-jumper\super-jumper-data\build\gen\fuzzy-magick.png
+magick -size 320x85 canvas:none -font Bookman-DemiItalic -pointsize 72 -draw "text 25,60 'Magick" -channel RGBA -blur 0x6 -fill darkred -stroke magenta -draw "text 25,60 'Magick" <<PROJECT_ROOT>>\build\gen\magick.png
 ```
 
 #### Convert images to JPG and change size
@@ -76,6 +76,9 @@ imagemagick {
 }
 ```
 ##### Executed command
+```
+magick <<PROJECT_ROOT>>\src\main\resources\assets\texture\texture.png -resize 20% <<PROJECT_ROOT>>\build\gen\texture\texture.jpg
+```
 
 # Donation
 If you find my code useful, you can [bye me a coffee](https://www.paypal.me/dshapovalov)
