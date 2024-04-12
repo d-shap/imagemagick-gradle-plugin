@@ -21,8 +21,6 @@ package ru.d_shap.gradle.plugin.imagemagick.parameters;
 
 import java.nio.file.Path;
 
-import org.gradle.api.Project;
-
 /**
  * The context.
  *
@@ -46,7 +44,7 @@ public class Context {
      * @param sourceFilePath      the source file path.
      * @param destinationFilePath the destination file path.
      */
-    public Context(final Project project, final Path sourceFilePath, final Path destinationFilePath) {
+    public Context(final Path sourceFilePath, final Path destinationFilePath) {
         super();
         _sourceFilePath = sourceFilePath;
         _destinationFilePath = destinationFilePath;
