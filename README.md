@@ -1,6 +1,14 @@
 # ImageMagick Gradle Plugin
 ImageMagick Gradle Plugin is a plugin to call ImageMagick CLI.
 
+## Prerequisites
+ImageMagick should be installed and `magick` command should be available:
+```
+magick logo: logo.gif
+magick identify logo.gif
+magick logo.gif win:
+```
+
 ## Examples
 
 #### Create a logo image
