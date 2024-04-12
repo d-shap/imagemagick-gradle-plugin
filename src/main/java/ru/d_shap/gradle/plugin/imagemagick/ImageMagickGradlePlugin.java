@@ -49,7 +49,7 @@ public class ImageMagickGradlePlugin implements Plugin<Project> {
         ExtensionContainer extensionContainer = project.getExtensions();
         ExtensionConfiguration extensionConfiguration = extensionContainer.create(EXTENSION_NAME, ExtensionConfiguration.class);
         Task task = project.task(TASK_NAME);
-        ImageMagickGradleAction action = new ImageMagickGradleAction(extensionConfiguration);
+        ImageMagickGradleAction action = new ImageMagickGradleAction(project, extensionConfiguration);
         task.doLast(action);
     }
 
