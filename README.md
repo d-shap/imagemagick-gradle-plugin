@@ -80,5 +80,40 @@ imagemagick {
 magick <<PROJECT_ROOT>>\src\main\resources\assets\texture\texture.png -resize 20% <<PROJECT_ROOT>>\build\gen\texture\texture.jpg
 ```
 
+#### Resize an image with improved quality
+##### Configuration
+```
+imagemagick {
+    pipelines {
+        resize {
+            src 'src/main/resources/assets', { include '**/*.png' }
+            dst 'gen'
+            parameters {
+                sourceFile()
+                colorspace('RGB')
+                sigmoidal({
+                    prefix = '+'
+                    args = ['-contrast', 11.6933]
+                })
+                define('filter:filter=Sinc')
+                define('filter:window=Jinc')
+                define('filter:lobes=3')
+                resize('400%')
+                sigmoidal({
+                    prefix = '-'
+                    args = ['-contrast', 11.6933]
+                })
+                colorspace('sRGB')
+                destinationFile()
+            }
+        }
+    }
+}
+```
+##### Executed command
+```
+magick <<PROJECT_ROOT>>\src\main\resources\assets\texture\texture.png -colorspace RGB +sigmoidal-contrast 11.6933 -define filter:filter=Sinc -define filter:window=Jinc -define filter:lobes=3 -resize 400% -sigmoidal-contrast 11.6933 -colorspace sRGB <<PROJECT_ROOT>>\build\gen\texture\texture.png
+```
+
 # Donation
 If you find my code useful, you can [bye me a coffee](https://www.paypal.me/dshapovalov)
