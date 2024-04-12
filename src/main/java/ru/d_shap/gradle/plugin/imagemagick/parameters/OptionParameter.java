@@ -51,8 +51,10 @@ public class OptionParameter extends Parameter {
             for (Object arg : (Object[]) _args) {
                 String argStr = toString(arg);
                 if (concatArgWithPrevious(argStr)) {
-                    int idx = list.size() - 1;
-                    list.set(idx, list.get(idx) + argStr);
+                    int lastIndex = list.size() - 1;
+                    String lastValue = list.get(lastIndex);
+                    lastValue += argStr;
+                    list.set(lastIndex, lastValue);
                 } else {
                     list.add(argStr);
                 }
