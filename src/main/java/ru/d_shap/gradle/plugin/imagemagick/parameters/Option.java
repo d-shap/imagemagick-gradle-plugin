@@ -69,7 +69,7 @@ public class Option {
      *
      * @param prefix the prefix.
      */
-    public void setPrefix(final String prefix) {
+    public void prefix(final String prefix) {
         _prefix = prefix;
     }
 
@@ -87,7 +87,7 @@ public class Option {
      *
      * @param args the args.
      */
-    public void setArgs(final List<Object> args) {
+    public void args(final List<Object> args) {
         _args = args;
     }
 
