@@ -20,6 +20,7 @@
 package ru.d_shap.gradle.plugin.imagemagick.parameters;
 
 import java.nio.file.Path;
+import java.util.List;
 
 /**
  * The source file parameter.
@@ -36,9 +37,10 @@ public class SourceFileParameter extends Parameter {
     }
 
     @Override
-    public String invoke(final Context context) {
+    void invoke(final Context context, final List<String> list) {
         Path sourceFilePath = context.getSourceFilePath();
-        return getAbsolutePath(sourceFilePath);
+        String absolutePath = getAbsolutePath(sourceFilePath);
+        list.add(absolutePath);
     }
 
 }
