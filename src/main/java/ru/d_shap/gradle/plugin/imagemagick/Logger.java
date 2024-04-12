@@ -72,4 +72,32 @@ public final class Logger {
         LOGGER_INSTANCE.warn(message);
     }
 
+    /**
+     * Check if error level is enabled.
+     *
+     * @return true, if error level is enabled.
+     */
+    public static boolean isErrorEnabled() {
+        return LOGGER_INSTANCE.isErrorEnabled();
+    }
+
+    /**
+     * Log the message with error level.
+     *
+     * @param message the message.
+     */
+    public static void error(final String message) {
+        LOGGER_INSTANCE.error(message);
+    }
+
+    /**
+     * Log the message with error level.
+     *
+     * @param message   the message.
+     * @param throwable the throwable.
+     */
+    public static void error(final String message, final Throwable throwable) {
+        LOGGER_INSTANCE.error(message, throwable);
+    }
+
 }
