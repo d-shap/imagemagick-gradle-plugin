@@ -21,6 +21,8 @@ package ru.d_shap.gradle.plugin.imagemagick.parameters;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The parameter.
@@ -40,7 +42,13 @@ public abstract class Parameter {
      *
      * @return the result of invocation.
      */
-    public abstract String invoke(Context context);
+    public final List<String> invoke(final Context context) {
+        List<String> list = new ArrayList<>();
+        invoke(context, list);
+        return list;
+    }
+
+    abstract void invoke(Context context, List<String> list);
 
     final String toString(final Object object) {
         if (object instanceof String) {
@@ -52,8 +60,7 @@ public abstract class Parameter {
 
     final String getAbsolutePath(final Path path) {
         File file = path.normalize().toFile();
-        String absolutePath = file.getAbsolutePath();
-        return "\"" + absolutePath + "\"";
+        return file.getAbsolutePath();
     }
 
 }
