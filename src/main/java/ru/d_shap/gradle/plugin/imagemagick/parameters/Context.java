@@ -21,12 +21,16 @@ package ru.d_shap.gradle.plugin.imagemagick.parameters;
 
 import java.nio.file.Path;
 
+import org.gradle.api.Project;
+
 /**
  * The context.
  *
  * @author Dmitry Shapovalov
  */
 public class Context {
+
+    private final Project _project;
 
     private final Path _sourceFilePath;
 
@@ -41,11 +45,13 @@ public class Context {
     /**
      * Create new object.
      *
+     * @param project             the project.
      * @param sourceFilePath      the source file path.
      * @param destinationFilePath the destination file path.
      */
-    public Context(final Path sourceFilePath, final Path destinationFilePath) {
+    public Context(final Project project, final Path sourceFilePath, final Path destinationFilePath) {
         super();
+        _project = project;
         _sourceFilePath = sourceFilePath;
         _destinationFilePath = destinationFilePath;
         _destinationFileParentPath = _destinationFilePath.getParent();
@@ -58,6 +64,15 @@ public class Context {
             _destinationFileName = destinationFileNameFull;
             _destinationFileExtension = null;
         }
+    }
+
+    /**
+     * Get the project.
+     *
+     * @return the project.
+     */
+    public Project getProject() {
+        return _project;
     }
 
     /**
