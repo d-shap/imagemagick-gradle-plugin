@@ -21,9 +21,9 @@ package ru.d_shap.gradle.plugin.imagemagick;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.exec.CommandLine;
 import org.gradle.api.Action;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileTree;
@@ -64,10 +64,10 @@ public class ImageMagickGradleAction implements Action<Task> {
         }
         List<PipelineConfiguration> pipelineConfigurations = _extensionConfiguration.getPipelineConfigurations();
         for (PipelineConfiguration pipelineConfiguration : pipelineConfigurations) {
-            ParametersConfiguration parametersConfiguration = pipelineConfiguration.getParameterConfiguration();
             File sourceBaseDir = pipelineConfiguration.getSourceBaseDir();
             FileTree sourceFiles = pipelineConfiguration.getSourceFiles();
             File destinationDir = pipelineConfiguration.getDestinationDir();
+            ParametersConfiguration parametersConfiguration = pipelineConfiguration.getParameterConfiguration();
             if (sourceFiles == null) {
                 processFile(parametersConfiguration, null, null, destinationDir);
             } else {
@@ -87,23 +87,17 @@ public class ImageMagickGradleAction implements Action<Task> {
         ensureDestinationExists(destinationFilePath);
         Context context = new Context(sourceFilePath, destinationFilePath);
 
+        CommandLine cmdLine = new CommandLine(COMMAND);
         List<Parameter> parameters = parametersConfiguration.getParameters();
-        List<String> strs = new ArrayList<>();
         for (Parameter parameter : parameters) {
-            String str = parameter.invoke(context);
-            if (str != null) {
-                strs.add(str);
+            List<String> arguments = parameter.invoke(context);
+            for (String argument : arguments) {
+                cmdLine.addArgument(argument);
             }
         }
 
-        StringBuilder command = new StringBuilder();
-        command.append(COMMAND);
-        for (String str : strs) {
-            command.append(' ').append(str);
-        }
-
         if (Logger.isInfoEnabled()) {
-            Logger.info(command.toString());
+            Logger.info(cmdLine.toString());
         }
     }
 
