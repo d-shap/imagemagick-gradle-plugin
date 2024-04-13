@@ -123,7 +123,7 @@ imagemagick {
 magick logo: <<PROJECT_ROOT>>\build\gen\logo.gif
 ```
 
-#### Draw an image with multiple image-processing operations
+#### Draw an image with multiple image processing operations
 ##### Configuration
 ```
 imagemagick {
