@@ -45,19 +45,20 @@ public class DestinationFileParameter extends Parameter {
 
     @Override
     void invoke(final Context context, final List<String> list) {
-        Path destinationFilePath;
+        Path processedDestinationFilePath;
         if (_closure == null) {
-            destinationFilePath = context.getDestinationFilePath();
+            processedDestinationFilePath = context.getDestinationFilePath();
         } else {
-            String destinationFileNameFull = rename(context);
+            String destinationFileNameFull = renameDestinationFile(context);
             Path destinationFileParentPath = context.getDestinationFileParentPath();
-            destinationFilePath = destinationFileParentPath.resolve(destinationFileNameFull);
+            processedDestinationFilePath = destinationFileParentPath.resolve(destinationFileNameFull);
         }
-        String absolutePath = getAbsolutePath(destinationFilePath);
+        context.setProcessedDestinationFilePath(processedDestinationFilePath);
+        String absolutePath = getAbsolutePath(processedDestinationFilePath);
         list.add(absolutePath);
     }
 
-    private String rename(final Context context) {
+    private String renameDestinationFile(final Context context) {
         String fileName = context.getDestinationFileName();
         String fileExtension = context.getDestinationFileExtension();
         Object callResult = _closure.call(fileName, fileExtension);
