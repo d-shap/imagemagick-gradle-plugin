@@ -36,7 +36,7 @@ public class ImageMagickGradlePlugin implements Plugin<Project> {
 
     private static final String EXTENSION_NAME = "imagemagick";
 
-    private static final String TASK_NAME = "imagemagick";
+    private static final String TASK_NAME = "imageMagick";
 
     /**
      * Create new object.
@@ -56,6 +56,8 @@ public class ImageMagickGradlePlugin implements Plugin<Project> {
         TaskContainer tasks = project.getTasks();
         Task processResourcesTask = tasks.getByName("processResources");
         processResourcesTask.dependsOn(imageMagickTask);
+        Task texturePackerTask = tasks.getByName("texturePacker");
+        texturePackerTask.dependsOn(imageMagickTask);
         Task compileJavaTask = tasks.getByName("compileJava");
         compileJavaTask.dependsOn(imageMagickTask);
     }
