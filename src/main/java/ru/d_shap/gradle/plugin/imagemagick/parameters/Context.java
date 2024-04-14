@@ -38,7 +38,7 @@ public class Context {
 
     private final String _destinationFileExtension;
 
-    private Path _outputFilePath;
+    private Path _processedDestinationFilePath;
 
     /**
      * Create new object.
@@ -60,7 +60,7 @@ public class Context {
             _destinationFileName = destinationFileNameFull;
             _destinationFileExtension = null;
         }
-        _outputFilePath = null;
+        _processedDestinationFilePath = null;
     }
 
     /**
@@ -109,21 +109,21 @@ public class Context {
     }
 
     /**
-     * Get the output file path.
+     * Get the processed destination file path.
      *
-     * @return the output file path.
+     * @return the processed destination file path.
      */
-    public Path getOutputFilePath() {
-        return _outputFilePath;
+    public Path getProcessedDestinationFilePath() {
+        return _processedDestinationFilePath;
     }
 
     /**
-     * Set the output file path.
+     * Set the processed destination file path.
      *
-     * @param outputFilePath the output file path.
+     * @param processedDestinationFilePath the processed destination file path.
      */
-    public void setOutputFilePath(final Path outputFilePath) {
-        _outputFilePath = outputFilePath;
+    public void setProcessedDestinationFilePath(final Path processedDestinationFilePath) {
+        _processedDestinationFilePath = processedDestinationFilePath;
     }
 
 }
