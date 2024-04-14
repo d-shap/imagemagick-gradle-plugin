@@ -56,7 +56,7 @@ public class ImageMagickGradleAction implements Action<Task> {
     /**
      * Create new object.
      *
-     * @param extensionConfiguration ImageMagick gradle plugin extension.
+     * @param extensionConfiguration the extension configuration.
      */
     public ImageMagickGradleAction(final ExtensionConfiguration extensionConfiguration) {
         super();
