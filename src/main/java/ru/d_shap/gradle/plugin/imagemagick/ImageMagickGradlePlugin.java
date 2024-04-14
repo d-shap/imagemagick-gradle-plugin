@@ -22,6 +22,7 @@ package ru.d_shap.gradle.plugin.imagemagick;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.UnknownTaskException;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.tasks.TaskContainer;
 
@@ -53,13 +54,19 @@ public class ImageMagickGradlePlugin implements Plugin<Project> {
         ImageMagickGradleAction imageMagickAction = new ImageMagickGradleAction(extensionConfiguration);
         imageMagickTask.doLast(imageMagickAction);
 
-        TaskContainer tasks = project.getTasks();
-        Task processResourcesTask = tasks.getByName("processResources");
-        processResourcesTask.dependsOn(imageMagickTask);
-        Task texturePackerTask = tasks.getByName("texturePacker");
-        texturePackerTask.dependsOn(imageMagickTask);
-        Task compileJavaTask = tasks.getByName("compileJava");
-        compileJavaTask.dependsOn(imageMagickTask);
+        TaskContainer taskContainer = project.getTasks();
+        addDependency(taskContainer, "processResources", imageMagickTask);
+        addDependency(taskContainer, "texturePacker", imageMagickTask);
+        addDependency(taskContainer, "compileJava", imageMagickTask);
+    }
+
+    private void addDependency(final TaskContainer taskContainer, final String taskName, final Task imageMagickTask) {
+        try {
+            Task task = taskContainer.getByName(taskName);
+            task.dependsOn(imageMagickTask);
+        } catch (UnknownTaskException ex) {
+            // Ignore
+        }
     }
 
 }
