@@ -38,6 +38,8 @@ public class Context {
 
     private final String _destinationFileExtension;
 
+    private Path _outputFilePath;
+
     /**
      * Create new object.
      *
@@ -58,6 +60,7 @@ public class Context {
             _destinationFileName = destinationFileNameFull;
             _destinationFileExtension = null;
         }
+        _outputFilePath = null;
     }
 
     /**
@@ -103,6 +106,24 @@ public class Context {
      */
     public String getDestinationFileExtension() {
         return _destinationFileExtension;
+    }
+
+    /**
+     * Get the output file path.
+     *
+     * @return the output file path.
+     */
+    public Path getOutputFilePath() {
+        return _outputFilePath;
+    }
+
+    /**
+     * Set the output file path.
+     *
+     * @param outputFilePath the output file path.
+     */
+    public void setOutputFilePath(final Path outputFilePath) {
+        _outputFilePath = outputFilePath;
     }
 
 }
