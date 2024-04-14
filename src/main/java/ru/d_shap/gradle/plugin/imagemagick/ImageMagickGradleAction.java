@@ -163,10 +163,10 @@ public class ImageMagickGradleAction implements Action<Task> {
                 Logger.error(errorOutputStr);
             }
             if (sourceFilePath != null && Logger.isWarnEnabled()) {
-                Logger.warn(sourceFilePath + " is processed");
+                Logger.warn("File " + sourceFilePath + " is processed");
             }
             if (Logger.isWarnEnabled()) {
-                Logger.warn(destinationFilePath + " is created");
+                Logger.warn("File " + destinationFilePath + " is created");
             }
         } catch (IOException ex) {
             if (Logger.isErrorEnabled()) {
