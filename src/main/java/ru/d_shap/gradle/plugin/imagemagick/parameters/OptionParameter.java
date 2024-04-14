@@ -69,7 +69,8 @@ public class OptionParameter extends Parameter {
     }
 
     private Option createOption() {
-        Option option = new Option(_name);
+        String name = _name.replace('_', '-');
+        Option option = new Option(name);
         if (_args instanceof Object[]) {
             if (((Object[]) _args).length == 1 && ((Object[]) _args)[0] instanceof Closure) {
                 Closure<?> closure = (Closure<?>) ((Object[]) _args)[0];
