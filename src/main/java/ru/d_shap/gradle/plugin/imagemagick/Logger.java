@@ -28,9 +28,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class Logger {
 
-    private static final String LOGGER_NAME = "imagemagick";
-
-    private static final org.slf4j.Logger LOGGER_INSTANCE = LoggerFactory.getLogger(LOGGER_NAME);
+    private static final org.slf4j.Logger LOGGER_INSTANCE = LoggerFactory.getLogger(ImageMagickGradlePlugin.TASK_NAME);
 
     private Logger() {
         super();

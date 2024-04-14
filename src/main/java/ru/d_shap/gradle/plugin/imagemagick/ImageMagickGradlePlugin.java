@@ -34,9 +34,9 @@ import ru.d_shap.gradle.plugin.imagemagick.configuration.ExtensionConfiguration;
  */
 public class ImageMagickGradlePlugin implements Plugin<Project> {
 
-    private static final String EXTENSION_NAME = "imagemagick";
+    static final String TASK_NAME = "imageMagick";
 
-    private static final String TASK_NAME = "imageMagick";
+    static final String EXTENSION_NAME = "imagemagick";
 
     /**
      * Create new object.
