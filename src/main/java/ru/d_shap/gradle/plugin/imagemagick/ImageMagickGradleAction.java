@@ -94,7 +94,8 @@ public class ImageMagickGradleAction implements Action<Task> {
 
         Context context = new Context(sourceFilePath, destinationFilePath);
         CommandLine commandLine = createCommandLine(context, parametersConfiguration);
-        executeCommandLine(commandLine, sourceFilePath);
+        Path processedDestinationFilePath = context.getProcessedDestinationFilePath();
+        executeCommandLine(commandLine, sourceFilePath, processedDestinationFilePath);
     }
 
     private Path getSourceFilePath(final File sourceFile) {
@@ -145,7 +146,7 @@ public class ImageMagickGradleAction implements Action<Task> {
         return commandLine;
     }
 
-    private void executeCommandLine(final CommandLine commandLine, final Path sourceFilePath) {
+    private void executeCommandLine(final CommandLine commandLine, final Path sourceFilePath, final Path destinationFilePath) {
         try {
             DefaultExecutor executor = DefaultExecutor.builder().get();
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -162,10 +163,10 @@ public class ImageMagickGradleAction implements Action<Task> {
                 Logger.error(errorOutputStr);
             }
             if (sourceFilePath != null && Logger.isWarnEnabled()) {
-                Logger.warn(sourceFilePath + " processed");
+                Logger.warn(sourceFilePath + " is processed");
             }
-            if (sourceFilePath == null && Logger.isWarnEnabled()) {
-                Logger.warn("A file was created");
+            if (Logger.isWarnEnabled()) {
+                Logger.warn(destinationFilePath + " is created");
             }
         } catch (IOException ex) {
             if (Logger.isErrorEnabled()) {
