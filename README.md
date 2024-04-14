@@ -77,9 +77,9 @@ Parameter name matches the function name in parameters block:
 * `monochrome()`
 * `rotate(degrees)`
 
-In this case parameters are passed with leading `-` symbol, for example `magick -crop geometry -monochrome -rotate degrees`
+In this case parameters are passed with leading `-` character, for example `magick -crop geometry -monochrome -rotate degrees`
 
-Some parameters don't have a leading `-` symbol, for example `canvas:none`.
+Some parameters don't have a leading `-` character, for example `canvas:none`.
 In this case a closure should be passed to the function:
 ```
 canvas({
@@ -88,14 +88,11 @@ canvas({
 })
 ```
 
-Some parameters have `-` symbol in their name, for example `-contrast-stretch geometry`.
-Symbol `-` is not allowed in function names, so function `contrast-stretch()` can't be defined.
-In this case next closure should be used:
+Some parameters have `-` character in their name, for example `-contrast-stretch geometry`.
+Character `-` is not allowed in function names, so function `contrast-stretch()` can't be defined.
+So a `-` character should be replaced with `_` character:
 ```
-contrast({
-    prefix = '-'
-    args = ['-stretch', geometry]
-})
+contrast_stretch(geometry)
 ```
 
 ## Examples
@@ -188,17 +185,17 @@ imagemagick {
             parameters {
                 sourceFile()
                 colorspace('RGB')
-                sigmoidal({
+                sigmoidal_contrast({
                     prefix = '+'
-                    args = ['-contrast', 11.6933]
+                    args = [11.6933]
                 })
                 define('filter:filter=Sinc')
                 define('filter:window=Jinc')
                 define('filter:lobes=3')
                 resize('400%')
-                sigmoidal({
+                sigmoidal_contrast({
                     prefix = '-'
-                    args = ['-contrast', 11.6933]
+                    args = [11.6933]
                 })
                 colorspace('sRGB')
                 destinationFile()
