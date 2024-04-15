@@ -31,6 +31,7 @@ import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteStreamHandler;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.gradle.api.Action;
+import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileTree;
 
@@ -73,6 +74,9 @@ public class ImageMagickGradleAction implements Action<Task> {
             File sourceBaseDir = pipelineConfiguration.getSourceBaseDir();
             FileTree sourceFiles = pipelineConfiguration.getSourceFiles();
             File destinationDir = pipelineConfiguration.getDestinationDir();
+            if (destinationDir == null) {
+                throw new InvalidUserDataException("dst property must be defined");
+            }
             ParametersConfiguration parametersConfiguration = pipelineConfiguration.getParameterConfiguration();
             if (sourceFiles == null) {
                 processFile(parametersConfiguration, null, null, destinationDir);
@@ -128,6 +132,7 @@ public class ImageMagickGradleAction implements Action<Task> {
 
     private CommandLine createCommandLine(final Context context, final ParametersConfiguration parametersConfiguration) {
         CommandLine commandLine = new CommandLine(COMMAND);
+
         List<Parameter> parameters = parametersConfiguration.getParameters();
         for (Parameter parameter : parameters) {
             List<String> arguments = parameter.invoke(context);
@@ -135,6 +140,7 @@ public class ImageMagickGradleAction implements Action<Task> {
                 commandLine.addArgument(argument);
             }
         }
+
         if (Logger.isInfoEnabled()) {
             StringBuilder builder = new StringBuilder();
             builder.append(commandLine.getExecutable());
@@ -143,6 +149,7 @@ public class ImageMagickGradleAction implements Action<Task> {
             }
             Logger.info(builder.toString());
         }
+
         return commandLine;
     }
 
