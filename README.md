@@ -13,7 +13,7 @@ magick logo.gif win:
 Apply an appropriate version of a plugin:
 ```
 plugins {
-    id 'ru.d-shap.imagemagick' version '1.0'
+    id 'ru.d-shap.imagemagick' version '1.1'
 }
 ```
 
