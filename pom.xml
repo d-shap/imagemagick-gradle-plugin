@@ -4,7 +4,7 @@
 
     <groupId>ru.d-shap.imagemagick</groupId>
     <artifactId>ru.d-shap.imagemagick.gradle.plugin</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
 
     <name>ImageMagick Gradle Plugin</name>
