@@ -19,14 +19,21 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick;
 
+import java.io.File;
+import java.util.List;
+
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.UnknownTaskException;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskInputs;
+import org.gradle.api.tasks.TaskOutputs;
 
 import ru.d_shap.gradle.plugin.imagemagick.configuration.ExtensionConfiguration;
+import ru.d_shap.gradle.plugin.imagemagick.configuration.PipelineConfiguration;
 
 /**
  * ImageMagick gradle plugin.
@@ -48,22 +55,53 @@ public class ImageMagickGradlePlugin implements Plugin<Project> {
 
     @Override
     public void apply(final Project project) {
-        ExtensionContainer extensionContainer = project.getExtensions();
-        ExtensionConfiguration extensionConfiguration = extensionContainer.create(EXTENSION_NAME, ExtensionConfiguration.class);
-        Task imageMagickTask = project.task(TASK_NAME);
-        ImageMagickGradleAction imageMagickAction = new ImageMagickGradleAction(extensionConfiguration);
-        imageMagickTask.doLast(imageMagickAction);
-
-        TaskContainer taskContainer = project.getTasks();
-        addDependency(taskContainer, "processResources", imageMagickTask);
-        addDependency(taskContainer, "texturePacker", imageMagickTask);
-        addDependency(taskContainer, "compileJava", imageMagickTask);
+        ExtensionConfiguration extensionConfiguration = getExtensionConfiguration(project);
+        Task task = project.task(TASK_NAME);
+        addInputs(task, extensionConfiguration);
+        addOutputs(task, extensionConfiguration);
+        addDependencies(project, task);
+        Action<Task> action = new ImageMagickGradleAction(extensionConfiguration);
+        task.doLast(action);
     }
 
-    private void addDependency(final TaskContainer taskContainer, final String taskName, final Task imageMagickTask) {
+    private ExtensionConfiguration getExtensionConfiguration(final Project project) {
+        ExtensionContainer extensionContainer = project.getExtensions();
+        return extensionContainer.create(EXTENSION_NAME, ExtensionConfiguration.class);
+    }
+
+    private void addInputs(final Task task, final ExtensionConfiguration extensionConfiguration) {
+        TaskInputs taskInputs = task.getInputs();
+        List<PipelineConfiguration> pipelineConfigurations = extensionConfiguration.getPipelineConfigurations();
+        for (PipelineConfiguration pipelineConfiguration : pipelineConfigurations) {
+            File sourceBaseDir = pipelineConfiguration.getSourceBaseDir();
+            if (sourceBaseDir != null) {
+                taskInputs.dir(sourceBaseDir);
+            }
+        }
+    }
+
+    private void addOutputs(final Task task, final ExtensionConfiguration extensionConfiguration) {
+        TaskOutputs taskOutputs = task.getOutputs();
+        List<PipelineConfiguration> pipelineConfigurations = extensionConfiguration.getPipelineConfigurations();
+        for (PipelineConfiguration pipelineConfiguration : pipelineConfigurations) {
+            File destinationDir = pipelineConfiguration.getDestinationDir();
+            if (destinationDir != null) {
+                taskOutputs.dir(destinationDir);
+            }
+        }
+    }
+
+    private void addDependencies(final Project project, final Task task) {
+        TaskContainer tasks = project.getTasks();
+        addDependency(tasks, "processResources", task);
+        addDependency(tasks, "texturePacker", task);
+        addDependency(tasks, "compileJava", task);
+    }
+
+    private void addDependency(final TaskContainer tasks, final String taskName, final Task task) {
         try {
-            Task task = taskContainer.getByName(taskName);
-            task.dependsOn(imageMagickTask);
+            Task otherTask = tasks.getByName(taskName);
+            otherTask.dependsOn(task);
         } catch (UnknownTaskException ex) {
             // Ignore
         }
