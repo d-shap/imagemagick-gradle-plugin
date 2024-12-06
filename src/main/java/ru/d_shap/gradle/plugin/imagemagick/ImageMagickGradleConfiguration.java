@@ -62,11 +62,17 @@ final class ImageMagickGradleConfiguration implements Action<Project> {
         List<PipelineConfiguration> pipelineConfigurations = _extensionConfiguration.getPipelineConfigurations();
         for (PipelineConfiguration pipelineConfiguration : pipelineConfigurations) {
             File file = pipelineConfiguration.getSourceBaseDir();
-            if (file != null) {
-                String path = file.getAbsolutePath();
-                if (uniquePaths.add(path)) {
-                    taskInputs.dir(file);
-                }
+            if (file == null) {
+                continue;
+            }
+            String path = file.getAbsolutePath();
+            if (uniquePaths.contains(path)) {
+                continue;
+            }
+            uniquePaths.add(path);
+            taskInputs.dir(file);
+            if (Logger.isWarnEnabled()) {
+                Logger.warn("Input \"" + path + "\" is added");
             }
         }
     }
@@ -76,12 +82,18 @@ final class ImageMagickGradleConfiguration implements Action<Project> {
         Set<String> uniquePaths = new HashSet<>();
         List<PipelineConfiguration> pipelineConfigurations = _extensionConfiguration.getPipelineConfigurations();
         for (PipelineConfiguration pipelineConfiguration : pipelineConfigurations) {
-            File file = pipelineConfiguration.getDestinationDir();
-            if (file != null) {
-                String path = file.getAbsolutePath();
-                if (uniquePaths.add(path)) {
-                    taskOutputs.dir(file);
-                }
+            File file = pipelineConfiguration.getSourceBaseDir();
+            if (file == null) {
+                continue;
+            }
+            String path = file.getAbsolutePath();
+            if (uniquePaths.contains(path)) {
+                continue;
+            }
+            uniquePaths.add(path);
+            taskOutputs.dir(file);
+            if (Logger.isWarnEnabled()) {
+                Logger.warn("Input \"" + path + "\" is added");
             }
         }
     }
