@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.Project;
+import org.gradle.api.model.ObjectFactory;
 
 import groovy.lang.Closure;
 
@@ -66,7 +67,8 @@ public class ExtensionConfiguration {
      */
     public void methodMissing(final String name, final Object args) {
         if (args instanceof Object[] && ((Object[]) args).length == 1 && ((Object[]) args)[0] instanceof Closure) {
-            PipelineConfiguration pipelineConfiguration = _project.getObjects().newInstance(PipelineConfiguration.class, _project, name);
+            ObjectFactory objects = _project.getObjects();
+            PipelineConfiguration pipelineConfiguration = objects.newInstance(PipelineConfiguration.class, _project, name);
 
             Closure<?> closure = (Closure<?>) ((Object[]) args)[0];
             closure.setDelegate(pipelineConfiguration);
