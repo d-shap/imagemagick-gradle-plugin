@@ -33,7 +33,7 @@ import groovy.lang.Closure;
  *
  * @author Dmitry Shapovalov
  */
-public class PipelineConfiguration {
+public final class PipelineConfiguration {
 
     private final Project _project;
 
