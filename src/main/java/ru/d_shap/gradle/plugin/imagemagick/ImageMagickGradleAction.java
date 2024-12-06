@@ -46,7 +46,7 @@ import ru.d_shap.gradle.plugin.imagemagick.parameters.Parameter;
  *
  * @author Dmitry Shapovalov
  */
-public class ImageMagickGradleAction implements Action<Task> {
+final class ImageMagickGradleAction implements Action<Task> {
 
     private static final String COMMAND = "magick";
 
@@ -54,12 +54,7 @@ public class ImageMagickGradleAction implements Action<Task> {
 
     private final ExtensionConfiguration _extensionConfiguration;
 
-    /**
-     * Create new object.
-     *
-     * @param extensionConfiguration the extension configuration.
-     */
-    public ImageMagickGradleAction(final ExtensionConfiguration extensionConfiguration) {
+    ImageMagickGradleAction(final ExtensionConfiguration extensionConfiguration) {
         super();
         _extensionConfiguration = extensionConfiguration;
     }
