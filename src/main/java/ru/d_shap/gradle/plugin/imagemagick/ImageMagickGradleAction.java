@@ -61,8 +61,8 @@ final class ImageMagickGradleAction implements Action<Task> {
 
     @Override
     public void execute(final Task task) {
-        if (Logger.isWarnEnabled()) {
-            Logger.warn("Start processing images with ImageMagick");
+        if (Logger.isInfoEnabled()) {
+            Logger.info("Start processing images with ImageMagick");
         }
         List<PipelineConfiguration> pipelineConfigurations = _extensionConfiguration.getPipelineConfigurations();
         for (PipelineConfiguration pipelineConfiguration : pipelineConfigurations) {
@@ -70,7 +70,7 @@ final class ImageMagickGradleAction implements Action<Task> {
             FileTree sourceFiles = pipelineConfiguration.getSourceFiles();
             File destinationDir = pipelineConfiguration.getDestinationDir();
             if (destinationDir == null) {
-                throw new InvalidUserDataException("dst property must be defined");
+                throw new InvalidUserDataException("Property dst is udefined");
             }
             ParametersConfiguration parametersConfiguration = pipelineConfiguration.getParameterConfiguration();
             if (sourceFiles == null) {
@@ -81,8 +81,8 @@ final class ImageMagickGradleAction implements Action<Task> {
                 }
             }
         }
-        if (Logger.isWarnEnabled()) {
-            Logger.warn("Finish processing images with ImageMagick");
+        if (Logger.isInfoEnabled()) {
+            Logger.info("Finish processing images with ImageMagick");
         }
     }
 
@@ -157,18 +157,18 @@ final class ImageMagickGradleAction implements Action<Task> {
             executor.setStreamHandler(streamHandler);
             executor.execute(commandLine);
             String outputStr = new String(outputStream.toByteArray(), StandardCharsets.UTF_8);
-            if (outputStr.length() > 0 && Logger.isInfoEnabled()) {
-                Logger.info(outputStr);
+            if (outputStr.length() > 0 && Logger.isDebugEnabled()) {
+                Logger.debug(outputStr);
             }
             String errorOutputStr = new String(errorOutputStream.toByteArray(), StandardCharsets.UTF_8);
             if (errorOutputStr.length() > 0 && Logger.isErrorEnabled()) {
                 Logger.error(errorOutputStr);
             }
-            if (sourceFilePath != null && Logger.isWarnEnabled()) {
-                Logger.warn("File " + sourceFilePath + " is processed");
+            if (sourceFilePath != null && Logger.isInfoEnabled()) {
+                Logger.info("File " + sourceFilePath + " is processed");
             }
-            if (Logger.isWarnEnabled()) {
-                Logger.warn("File " + destinationFilePath + " is created");
+            if (Logger.isInfoEnabled()) {
+                Logger.info("File " + destinationFilePath + " is created");
             }
         } catch (IOException ex) {
             if (Logger.isErrorEnabled()) {
