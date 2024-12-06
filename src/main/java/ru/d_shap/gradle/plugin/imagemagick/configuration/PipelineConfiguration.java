@@ -24,6 +24,7 @@ import java.io.File;
 import org.gradle.api.Project;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.tasks.util.PatternSet;
 
 import groovy.lang.Closure;
@@ -33,7 +34,7 @@ import groovy.lang.Closure;
  *
  * @author Dmitry Shapovalov
  */
-public final class PipelineConfiguration {
+public class PipelineConfiguration {
 
     private final Project _project;
 
@@ -51,7 +52,7 @@ public final class PipelineConfiguration {
      * Create new object.
      *
      * @param project the project.
-     * @param name    the name.
+     * @param name    the pipeline name.
      */
     public PipelineConfiguration(final Project project, final String name) {
         super();
@@ -60,13 +61,14 @@ public final class PipelineConfiguration {
         _sourceBaseDir = null;
         _sourceFiles = null;
         _destinationDir = null;
-        _parametersConfiguration = _project.getObjects().newInstance(ParametersConfiguration.class);
+        ObjectFactory objects = _project.getObjects();
+        _parametersConfiguration = objects.newInstance(ParametersConfiguration.class);
     }
 
     /**
-     * Get the name.
+     * Get the pipeline name.
      *
-     * @return the name.
+     * @return the pipeline name.
      */
     public String getName() {
         return _name;
@@ -91,19 +93,20 @@ public final class PipelineConfiguration {
     }
 
     /**
-     * Set the source files.
+     * Set the source.
      *
      * @param sourceBaseDir the source base directory.
      * @param patternSet    the pattern set.
      */
     public void src(final String sourceBaseDir, final PatternSet patternSet) {
         ConfigurableFileTree fileTree = _project.fileTree(sourceBaseDir);
-        _sourceBaseDir = fileTree.getDir().getAbsoluteFile();
+        File sourceBaseFile = fileTree.getDir();
+        _sourceBaseDir = sourceBaseFile.getAbsoluteFile();
         _sourceFiles = fileTree.matching(patternSet);
     }
 
     /**
-     * Set the source files.
+     * Set the source.
      *
      * @param sourceBaseDir the source base directory.
      * @param closure       the closure.
