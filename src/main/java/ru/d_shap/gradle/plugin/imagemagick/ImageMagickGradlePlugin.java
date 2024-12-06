@@ -75,7 +75,7 @@ public class ImageMagickGradlePlugin implements Plugin<Project> {
 
     private ExtensionConfiguration getExtensionConfiguration(final Project project) {
         ExtensionContainer extensions = project.getExtensions();
-        return extensions.create(EXTENSION_NAME, ExtensionConfiguration.class);
+        return extensions.create(EXTENSION_NAME, ExtensionConfiguration.class, project);
     }
 
     private void addTaskAction(final Task task, final ExtensionConfiguration extensionConfiguration) {
