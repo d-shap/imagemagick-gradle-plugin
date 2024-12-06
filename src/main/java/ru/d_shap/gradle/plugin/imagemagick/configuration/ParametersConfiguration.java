@@ -35,7 +35,7 @@ import groovy.util.Eval;
  *
  * @author Dmitry Shapovalov
  */
-public class ParametersConfiguration {
+public final class ParametersConfiguration {
 
     private final List<Parameter> _parameters;
 
