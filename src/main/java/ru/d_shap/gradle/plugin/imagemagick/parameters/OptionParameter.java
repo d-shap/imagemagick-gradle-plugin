@@ -19,8 +19,12 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 package ru.d_shap.gradle.plugin.imagemagick.parameters;
 
-import java.util.Arrays;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.gradle.api.InvalidUserDataException;
 
 import groovy.lang.Closure;
 
@@ -79,11 +83,57 @@ public final class OptionParameter extends Parameter {
                 closure.call();
             } else {
                 option.setPrefix("-");
-                List<Object> args = Arrays.asList((Object[]) _args);
+                List<Object> args = new ArrayList<>();
+                for (Object arg : (Object[]) _args) {
+                    if (isValidArgType(arg)) {
+                        args.add(arg);
+                    } else {
+                        throw new InvalidUserDataException("Wrong parameter args configuration");
+                    }
+                }
                 option.setArgs(args);
             }
+        } else {
+            throw new InvalidUserDataException("Wrong parameter configuration");
         }
         return option;
+    }
+
+    private boolean isValidArgType(final Object arg) {
+        if (arg instanceof CharSequence) {
+            return true;
+        }
+        if (arg instanceof Boolean) {
+            return true;
+        }
+        if (arg instanceof Byte) {
+            return true;
+        }
+        if (arg instanceof Short) {
+            return true;
+        }
+        if (arg instanceof Integer) {
+            return true;
+        }
+        if (arg instanceof Long) {
+            return true;
+        }
+        if (arg instanceof Float) {
+            return true;
+        }
+        if (arg instanceof Double) {
+            return true;
+        }
+        if (arg instanceof Character) {
+            return true;
+        }
+        if (arg instanceof BigInteger) {
+            return true;
+        }
+        if (arg instanceof BigDecimal) {
+            return true;
+        }
+        return false;
     }
 
     private boolean concatArgWithPrevious(final String arg) {
