@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @author Dmitry Shapovalov
  */
-public class Option {
+public final class Option {
 
     private final String _name;
 
