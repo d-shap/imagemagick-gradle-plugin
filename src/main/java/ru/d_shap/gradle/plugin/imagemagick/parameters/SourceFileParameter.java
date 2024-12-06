@@ -27,7 +27,7 @@ import java.util.List;
  *
  * @author Dmitry Shapovalov
  */
-public class SourceFileParameter extends Parameter {
+public final class SourceFileParameter extends Parameter {
 
     /**
      * Create new object.

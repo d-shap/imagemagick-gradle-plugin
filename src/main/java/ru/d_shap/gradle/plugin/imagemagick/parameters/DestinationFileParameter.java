@@ -29,7 +29,7 @@ import groovy.lang.Closure;
  *
  * @author Dmitry Shapovalov
  */
-public class DestinationFileParameter extends Parameter {
+public final class DestinationFileParameter extends Parameter {
 
     private final Closure<?> _closure;
 

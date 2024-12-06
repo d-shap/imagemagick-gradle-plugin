@@ -29,7 +29,7 @@ import groovy.lang.Closure;
  *
  * @author Dmitry Shapovalov
  */
-public class OptionParameter extends Parameter {
+public final class OptionParameter extends Parameter {
 
     private final String _name;
 
