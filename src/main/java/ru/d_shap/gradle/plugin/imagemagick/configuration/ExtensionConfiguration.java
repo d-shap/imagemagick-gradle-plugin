@@ -22,6 +22,8 @@ package ru.d_shap.gradle.plugin.imagemagick.configuration;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.Project;
 import org.gradle.api.model.ObjectFactory;
@@ -44,6 +46,7 @@ public class ExtensionConfiguration {
      *
      * @param project the project.
      */
+    @Inject
     public ExtensionConfiguration(final Project project) {
         super();
         _project = project;

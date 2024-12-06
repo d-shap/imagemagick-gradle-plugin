@@ -22,6 +22,8 @@ package ru.d_shap.gradle.plugin.imagemagick.configuration;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import ru.d_shap.gradle.plugin.imagemagick.parameters.DestinationFileParameter;
 import ru.d_shap.gradle.plugin.imagemagick.parameters.OptionParameter;
 import ru.d_shap.gradle.plugin.imagemagick.parameters.Parameter;
@@ -42,6 +44,7 @@ public class ParametersConfiguration {
     /**
      * Create new object.
      */
+    @Inject
     public ParametersConfiguration() {
         super();
         _parameters = new ArrayList<>();

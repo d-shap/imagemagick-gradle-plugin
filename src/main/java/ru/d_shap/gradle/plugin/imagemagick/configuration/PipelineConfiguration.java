@@ -21,6 +21,8 @@ package ru.d_shap.gradle.plugin.imagemagick.configuration;
 
 import java.io.File;
 
+import javax.inject.Inject;
+
 import org.gradle.api.Project;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.FileTree;
@@ -54,6 +56,7 @@ public class PipelineConfiguration {
      * @param project the project.
      * @param name    the pipeline name.
      */
+    @Inject
     public PipelineConfiguration(final Project project, final String name) {
         super();
         _project = project;
