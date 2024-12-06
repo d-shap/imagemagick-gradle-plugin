@@ -73,7 +73,10 @@ Parameter name matches the function name in parameters block:
 * `monochrome()`
 * `rotate(degrees)`
 
-In this case parameters are passed with leading `-` character, for example `magick -crop geometry -monochrome -rotate degrees`
+In this case parameters are passed with leading `-` character and the next command will be executed:
+```
+magick -crop geometry -monochrome -rotate degrees
+```
 
 Some parameters don't have a leading `-` character, for example `canvas:none`.
 In this case a closure should be passed to the function:
@@ -196,6 +199,3 @@ imagemagick {
 ```
 magick <<PROJECT_ROOT>>\src\main\resources\assets\texture\texture.png -colorspace RGB +sigmoidal-contrast 11.6933 -define filter:filter=Sinc -define filter:window=Jinc -define filter:lobes=3 -resize 400% -sigmoidal-contrast 11.6933 -colorspace sRGB <<PROJECT_ROOT>>\build\gen\texture\texture.png
 ```
-
-# Donation
-If you find my code useful, you can [bye me a coffee](https://www.paypal.me/dshapovalov)
