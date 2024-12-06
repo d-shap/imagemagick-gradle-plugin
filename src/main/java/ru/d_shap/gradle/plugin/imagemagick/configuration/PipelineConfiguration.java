@@ -131,8 +131,9 @@ public class PipelineConfiguration {
      * @param destinationDir the destination directory.
      */
     public void dst(final String destinationDir) {
-        File buildDir = _project.getBuildDir().getAbsoluteFile();
-        _destinationDir = new File(buildDir, destinationDir);
+        File destinationBaseFile = _project.getBuildDir();
+        File destinationBaseDir = destinationBaseFile.getAbsoluteFile();
+        _destinationDir = new File(destinationBaseDir, destinationDir);
     }
 
     /**
