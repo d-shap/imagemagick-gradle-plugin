@@ -24,13 +24,11 @@ For example, one set of images should be converted from JPG to PNG format.
 Another set of images should be resized.
 ```
 imagemagick {
-    pipelines {
-        convert {
-            ...
-        }
-        resize {
-            ...
-        }
+    convert {
+        ...
+    }
+    resize {
+        ...
     }
 }
 ```
@@ -47,15 +45,13 @@ magick rose.jpg -resize 50% rose.png
 The configuration will be the following:
 ```
 imagemagick {
-    pipelines {
-        resize {
-            src 'source', { include 'rose.jpg' }
-            dst 'gen'
-            parameters {
-                sourceFile()
-                resize('50%')
-                destinationFile('rose.png')
-            }
+    resize {
+        src 'source', { include 'rose.jpg' }
+        dst 'gen'
+        parameters {
+            sourceFile()
+            resize('50%')
+            destinationFile('rose.png')
         }
     }
 }
@@ -101,16 +97,14 @@ contrast_stretch(geometry)
 ##### Configuration
 ```
 imagemagick {
-    pipelines {
-        pipeline {
-            dst 'gen'
-            parameters {
-                logo({
-                    prefix = ''
-                    args = [':']
-                })
-                destinationFile('logo.gif')
-            }
+    pipeline {
+        dst 'gen'
+        parameters {
+            logo({
+                prefix = ''
+                args = [':']
+            })
+            destinationFile('logo.gif')
         }
     }
 }
@@ -124,25 +118,23 @@ magick logo: <<PROJECT_ROOT>>\build\gen\logo.gif
 ##### Configuration
 ```
 imagemagick {
-    pipelines {
-        pipeline {
-            dst 'gen'
-            parameters {
-                size('320x85')
-                canvas({
-                    prefix = ''
-                    args = [':none']
-                })
-                font('Bookman-DemiItalic')
-                pointsize(72)
-                draw('text 25,60 \'Magick\'')
-                channel('RGBA')
-                blur('0x6')
-                fill('darkred')
-                stroke('magenta')
-                draw('text 25,60 \'Magick\'')
-                destinationFile('magick.png')
-            }
+    pipeline {
+        dst 'gen'
+        parameters {
+            size('320x85')
+            canvas({
+                prefix = ''
+                args = [':none']
+            })
+            font('Bookman-DemiItalic')
+            pointsize(72)
+            draw('text 25,60 \'Magick\'')
+            channel('RGBA')
+            blur('0x6')
+            fill('darkred')
+            stroke('magenta')
+            draw('text 25,60 \'Magick\'')
+            destinationFile('magick.png')
         }
     }
 }
@@ -156,15 +148,13 @@ magick -size 320x85 canvas:none -font Bookman-DemiItalic -pointsize 72 -draw "te
 ##### Configuration
 ```
 imagemagick {
-    pipelines {
-        jpgconvert {
-            src 'src/main/resources/assets', { include '**/*.png' }
-            dst 'gen'
-            parameters {
-                sourceFile()
-                resize('20%')
-                destinationFile({ name, ext -> "${name}.jpg" })
-            }
+    jpgconvert {
+        src 'src/main/resources/assets', { include '**/*.png' }
+        dst 'gen'
+        parameters {
+            sourceFile()
+            resize('20%')
+            destinationFile({ name, ext -> "${name}.jpg" })
         }
     }
 }
@@ -178,28 +168,26 @@ magick <<PROJECT_ROOT>>\src\main\resources\assets\texture\texture.png -resize 20
 ##### Configuration
 ```
 imagemagick {
-    pipelines {
-        resize {
-            src 'src/main/resources/assets', { include '**/*.png' }
-            dst 'gen'
-            parameters {
-                sourceFile()
-                colorspace('RGB')
-                sigmoidal_contrast({
-                    prefix = '+'
-                    args = [11.6933]
-                })
-                define('filter:filter=Sinc')
-                define('filter:window=Jinc')
-                define('filter:lobes=3')
-                resize('400%')
-                sigmoidal_contrast({
-                    prefix = '-'
-                    args = [11.6933]
-                })
-                colorspace('sRGB')
-                destinationFile()
-            }
+    resize {
+        src 'src/main/resources/assets', { include '**/*.png' }
+        dst 'gen'
+        parameters {
+            sourceFile()
+            colorspace('RGB')
+            sigmoidal_contrast({
+                prefix = '+'
+                args = [11.6933]
+            })
+            define('filter:filter=Sinc')
+            define('filter:window=Jinc')
+            define('filter:lobes=3')
+            resize('400%')
+            sigmoidal_contrast({
+                prefix = '-'
+                args = [11.6933]
+            })
+            colorspace('sRGB')
+            destinationFile()
         }
     }
 }
