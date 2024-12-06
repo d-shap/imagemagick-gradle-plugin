@@ -82,7 +82,7 @@ final class ImageMagickGradleConfiguration implements Action<Project> {
         Set<String> uniquePaths = new HashSet<>();
         List<PipelineConfiguration> pipelineConfigurations = _extensionConfiguration.getPipelineConfigurations();
         for (PipelineConfiguration pipelineConfiguration : pipelineConfigurations) {
-            File file = pipelineConfiguration.getSourceBaseDir();
+            File file = pipelineConfiguration.getDestinationDir();
             if (file == null) {
                 continue;
             }
