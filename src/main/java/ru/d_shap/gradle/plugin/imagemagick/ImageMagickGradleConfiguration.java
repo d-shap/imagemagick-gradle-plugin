@@ -71,8 +71,8 @@ final class ImageMagickGradleConfiguration implements Action<Project> {
             }
             uniquePaths.add(path);
             taskInputs.dir(file);
-            if (Logger.isWarnEnabled()) {
-                Logger.warn("Input \"" + path + "\" is added");
+            if (Logger.isDebugEnabled()) {
+                Logger.debug("Input \"" + path + "\" is added");
             }
         }
     }
@@ -92,8 +92,8 @@ final class ImageMagickGradleConfiguration implements Action<Project> {
             }
             uniquePaths.add(path);
             taskOutputs.dir(file);
-            if (Logger.isWarnEnabled()) {
-                Logger.warn("Output \"" + path + "\" is added");
+            if (Logger.isDebugEnabled()) {
+                Logger.debug("Output \"" + path + "\" is added");
             }
         }
     }
