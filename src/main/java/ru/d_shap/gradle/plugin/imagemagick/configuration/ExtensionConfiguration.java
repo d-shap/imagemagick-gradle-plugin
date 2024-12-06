@@ -22,9 +22,10 @@ package ru.d_shap.gradle.plugin.imagemagick.configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gradle.api.Action;
-import org.gradle.api.NamedDomainObjectContainer;
+import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.Project;
+
+import groovy.lang.Closure;
 
 /**
  * The extension configuration.
@@ -58,15 +59,24 @@ public class ExtensionConfiguration {
     }
 
     /**
-     * Set the pipeline configurations.
+     * Add the pipeline configuration.
      *
-     * @param action the action.
+     * @param name the pipeline name.
+     * @param args the pipeline args.
      */
-    public void pipelines(final Action<? super NamedDomainObjectContainer<PipelineConfiguration>> action) {
-        NamedDomainObjectContainer<PipelineConfiguration> pipelineContainer = _project.container(PipelineConfiguration.class);
-        action.execute(pipelineContainer);
-        _pipelineConfigurations.clear();
-        _pipelineConfigurations.addAll(pipelineContainer);
+    public void methodMissing(final String name, final Object args) {
+        if (args instanceof Object[] && ((Object[]) args).length == 1 && ((Object[]) args)[0] instanceof Closure) {
+            PipelineConfiguration pipelineConfiguration = new PipelineConfiguration(_project, name);
+
+            Closure<?> closure = (Closure<?>) ((Object[]) args)[0];
+            closure.setDelegate(pipelineConfiguration);
+            closure.setResolveStrategy(Closure.DELEGATE_ONLY);
+            closure.call();
+
+            _pipelineConfigurations.add(pipelineConfiguration);
+        } else {
+            throw new InvalidUserDataException("Wrong extension configuration");
+        }
     }
 
 }
