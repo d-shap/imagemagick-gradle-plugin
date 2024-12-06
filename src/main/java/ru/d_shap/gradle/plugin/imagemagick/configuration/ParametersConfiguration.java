@@ -79,7 +79,8 @@ public class ParametersConfiguration {
      */
     public void destinationFile(final String fileName) {
         Closure<?> closure = (Closure<?>) Eval.me("{ name, extension -> '" + fileName + "' }");
-        destinationFile(closure);
+        Parameter parameter = new DestinationFileParameter(closure);
+        _parameters.add(parameter);
     }
 
     /**
