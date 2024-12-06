@@ -93,7 +93,7 @@ final class ImageMagickGradleConfiguration implements Action<Project> {
             uniquePaths.add(path);
             taskOutputs.dir(file);
             if (Logger.isWarnEnabled()) {
-                Logger.warn("Input \"" + path + "\" is added");
+                Logger.warn("Output \"" + path + "\" is added");
             }
         }
     }
