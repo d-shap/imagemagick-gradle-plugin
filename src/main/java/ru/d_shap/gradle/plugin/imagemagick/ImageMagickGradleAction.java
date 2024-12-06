@@ -136,13 +136,13 @@ final class ImageMagickGradleAction implements Action<Task> {
             }
         }
 
-        if (Logger.isInfoEnabled()) {
+        if (Logger.isDebugEnabled()) {
             StringBuilder builder = new StringBuilder();
             builder.append(commandLine.getExecutable());
             for (String argument : commandLine.getArguments()) {
                 builder.append(' ').append(argument);
             }
-            Logger.info(builder.toString());
+            Logger.debug(builder.toString());
         }
 
         return commandLine;
