@@ -26,7 +26,7 @@ import java.nio.file.Path;
  *
  * @author Dmitry Shapovalov
  */
-public class Context {
+public final class Context {
 
     private final Path _sourceFilePath;
 
