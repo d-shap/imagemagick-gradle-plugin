@@ -66,7 +66,7 @@ public class ExtensionConfiguration {
      */
     public void methodMissing(final String name, final Object args) {
         if (args instanceof Object[] && ((Object[]) args).length == 1 && ((Object[]) args)[0] instanceof Closure) {
-            PipelineConfiguration pipelineConfiguration = new PipelineConfiguration(_project, name);
+            PipelineConfiguration pipelineConfiguration = _project.getObjects().newInstance(PipelineConfiguration.class, _project, name);
 
             Closure<?> closure = (Closure<?>) ((Object[]) args)[0];
             closure.setDelegate(pipelineConfiguration);
