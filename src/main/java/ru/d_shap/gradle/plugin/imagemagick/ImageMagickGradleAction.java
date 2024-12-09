@@ -156,6 +156,7 @@ final class ImageMagickGradleAction implements Action<Task> {
             ExecuteStreamHandler streamHandler = new PumpStreamHandler(outputStream, errorOutputStream);
             executor.setStreamHandler(streamHandler);
             executor.execute(commandLine);
+
             String outputStr = new String(outputStream.toByteArray(), StandardCharsets.UTF_8);
             if (outputStr.length() > 0 && Logger.isDebugEnabled()) {
                 Logger.debug(outputStr);
